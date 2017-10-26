@@ -6,7 +6,6 @@ namespace InvoiceParser
   public class Expenses
   {
     private readonly IEnumerable<Expense> _expenses;
-    private List<string> _filters;
 
     private Expenses(IEnumerable<Expense> expenses)
     {
@@ -15,36 +14,22 @@ namespace InvoiceParser
 
     public static Expenses From(string text)
     {
-      return new Expenses(ParseText(text));
+      return new Expenses(GetExpensesFromText(text));
     }
 
     public Expenses ThatMatches(List<string> filters)
     {
-      _filters = filters;
-      return this;
+      return new Expenses(filters.SelectMany(filter => _expenses.Where(expense => expense.Description.Contains(filter))));
     }
 
     public double Sum()
     {
-      return GetFilteredTransactions().Select(expense => expense.Amount).Sum();
+      return _expenses.Select(expense => expense.Amount).Sum();
     }
 
-    private IEnumerable<Expense> GetFilteredTransactions()
+    private static IEnumerable<Expense> GetExpensesFromText(string text)
     {
-      return _filters?.SelectMany(filter => _expenses.Where(expense => expense.Description.Contains(filter))) ?? _expenses;
-    }
-
-    private static IEnumerable<Expense> ParseText(string text)
-    {
-      foreach (var line in GetLinesThatAreExpenses(text.Split('\n')))
-      {
-        if (Expense.TryParse(line, out var expense))
-          yield return expense;
-      }
-    }
-
-    private static IEnumerable<string> GetLinesThatAreExpenses(IEnumerable<string> lines)
-    {
+      var lines = text.Split('\n');
       var withinExpenses = false;
 
       foreach (var line in lines)
@@ -61,8 +46,8 @@ namespace InvoiceParser
           continue;
         }
 
-        if (withinExpenses)
-          yield return line;
+        if (withinExpenses && Expense.TryParse(line, out var expense))
+          yield return expense;
       }
     }
   }
