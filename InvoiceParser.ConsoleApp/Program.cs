@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using InvoiceParser.Requests;
 
 namespace InvoiceParser.ConsoleApp
 {
@@ -15,26 +17,33 @@ namespace InvoiceParser.ConsoleApp
         new List<string> {"VIAPLAY"}
       };
 
-      if (args.Length != 1)
-        Console.WriteLine("Usage: InvoiceParser.ConsoleApp <path to Circle K invoice pdf>");
-      else
-      {
-        if (!File.Exists(args[0]))
-        {
-          Console.WriteLine($"{args[0]} does not exist");
-        }
-        else
-        {
-          var expenses = Expenses.From(new PdfParser().GetTextFromPdf(File.ReadAllBytes(args[0])));
-
-          Console.WriteLine("Total: " + expenses.Sum());
-
-          filters.ForEach(filter =>
-          {
-            Console.WriteLine(string.Join(", ", filter) + ": " + expenses.ThatMatches(filter).Sum());
-          });
-        }
-      }
+      new Runner().Run();
     }
   }
+
+  public class Runner
+  {
+    public async void Run()
+    {
+      var mediator = Bootstrap.BuildMediator();
+
+      var filePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads\\pdf.pdf";
+      var bytes = File.ReadAllBytes(filePath);
+
+      var text = await mediator.Send(new ParsePdfRequest
+      {
+        Bytes = bytes
+      });
+
+      var expenses = await mediator.Send(new ParseCirclekInvoiceRequest
+      {
+        Text = text
+      });
+
+      expenses.ToList().ForEach(expense => mediator.Publish(expense));
+    }
+  }
+
+  //  return filters.SelectMany(filter => expenses.Where(expense => expense.Description.Contains(filter)));
+  //  return expenses.Select(expense => expense.Amount).Sum();
 }

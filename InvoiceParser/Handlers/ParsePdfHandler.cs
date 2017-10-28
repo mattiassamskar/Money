@@ -1,15 +1,17 @@
 ﻿using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
+using InvoiceParser.Requests;
+using MediatR;
 
-namespace InvoiceParser
+namespace InvoiceParser.Handlers
 {
-  public class PdfParser
+  public class ParsePdfHandler : IRequestHandler<ParsePdfRequest, string>
   {
-    public string GetTextFromPdf(byte[] bytes)
+    public string Handle(ParsePdfRequest message)
     {
       var text = string.Empty;
 
-      using (var pdfReader = new PdfReader(bytes))
+      using (var pdfReader = new PdfReader(message.Bytes))
       {
         for (var i = 1; i <= pdfReader.NumberOfPages; i++)
         {
