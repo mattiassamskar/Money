@@ -1,22 +1,23 @@
-window.onload = function () {
+function drop_handler(ev) {
+    ev.preventDefault();
 
-
-    document.getElementById('fileinput').addEventListener('change', function () {
-        var file = this.files[0];
-
+    var dt = ev.dataTransfer;
+    for (var i = 0; i < dt.files.length; i++) {
         var xhr = new XMLHttpRequest();
         xhr.open("POST", 'upload', true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                console.log(xhr.responseText);
-            }
-        };
         var fd = new FormData();
-        fd.append("upload_file", file);
+        fd.append("upload_file", dt.files[i]);
         xhr.send(fd);
-    }, false);
+    }
 }
 
+function dragover_handler(ev) {
+    ev.preventDefault();
+}
+
+function dragend_handler(ev) {
+    ev.dataTransfer.clearData();
+}
 
 // var req = new XMLHttpRequest();
 // req.onload = function () {

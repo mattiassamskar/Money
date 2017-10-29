@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using InvoiceParser.Requests;
 using MediatR;
 using Nancy;
@@ -23,16 +24,16 @@ namespace InvoiceParser.Web.Modules
       if (file == null)
         return Negotiate.WithStatusCode(HttpStatusCode.BadRequest);
 
-      ParseFile(file.Value);
+      ParseFile(file.Value).Wait();
 
       return Negotiate.WithStatusCode(HttpStatusCode.OK);
     }
 
-    private async void ParseFile(Stream stream)
+    private async Task ParseFile(Stream stream)
     {
       using (var destinationStream = new MemoryStream())
       {
-        await stream.CopyToAsync(destinationStream);
+        stream.CopyTo(destinationStream);
         var text = await _mediator.Send(new ParsePdfRequest { Bytes = destinationStream.ToArray() });
         var expenses = await _mediator.Send(new ParseSkandiaStatementRequest { Text = text });
         expenses.ToList().ForEach(expense => _mediator.Publish(expense));

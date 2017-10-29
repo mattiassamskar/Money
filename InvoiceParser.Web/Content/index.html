@@ -11,7 +11,9 @@
 <body>
   <div>
     <div id="container" class="container">
-      <input type="file" id="fileinput" />
+      <div id="drop_zone" ondrop="drop_handler(event);" ondragover="dragover_handler(event);" ondragend="dragend_handler(event);">
+        <strong>Drag one or more files to this Drop Zone ...</strong>
+      </div>
     </div>
   </div>
 </body>
