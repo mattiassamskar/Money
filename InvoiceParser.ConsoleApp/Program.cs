@@ -27,7 +27,7 @@ namespace InvoiceParser.ConsoleApp
     {
       var mediator = Bootstrap.BuildMediator();
 
-      var filePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads\\pdf.pdf";
+      var filePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads\\9159-752.337-4_2017-07-26-2017-10-26.pdf";
       var bytes = File.ReadAllBytes(filePath);
 
       var text = await mediator.Send(new ParsePdfRequest
@@ -35,7 +35,7 @@ namespace InvoiceParser.ConsoleApp
         Bytes = bytes
       });
 
-      var expenses = await mediator.Send(new ParseCirclekInvoiceRequest
+      var expenses = await mediator.Send(new ParseSkandiaStatementRequest
       {
         Text = text
       });

@@ -1,4 +1,5 @@
-﻿using iTextSharp.text.pdf;
+﻿using System;
+using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
 using InvoiceParser.Requests;
 using MediatR;
@@ -16,6 +17,7 @@ namespace InvoiceParser.Handlers
         for (var i = 1; i <= pdfReader.NumberOfPages; i++)
         {
           text += PdfTextExtractor.GetTextFromPage(pdfReader, i);
+          text += Environment.NewLine;
         }
       }
       return text;
