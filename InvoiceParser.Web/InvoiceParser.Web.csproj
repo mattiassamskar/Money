@@ -88,8 +88,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="ContentModule.cs" />
-    <Compile Include="ExpensesModule.cs" />
+    <Compile Include="Modules\ContentModule.cs" />
+    <Compile Include="Modules\UploadModule.cs" />
+    <Compile Include="Modules\ExpensesModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,8 @@
-﻿using MediatR;
+﻿using System.Collections.Generic;
+using InvoiceParser.Handlers;
+using InvoiceParser.Models;
+using InvoiceParser.Requests;
+using MediatR;
 using Nancy;
 using Nancy.Conventions;
 using Nancy.TinyIoc;
@@ -19,6 +23,8 @@ namespace InvoiceParser.Web
       base.ConfigureApplicationContainer(container);
 
       container.Register<IMediator>((x, overloads) => new Mediator(x.Resolve, x.ResolveAll));
+      container.Register<IRequestHandler<ParsePdfRequest, string>, ParsePdfHandler>();
+      container.Register<IRequestHandler<ParseSkandiaStatementRequest, IEnumerable<Expense>>, ParseSkandiaStatementHandler>();
     }
   }
 }

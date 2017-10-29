@@ -1,6 +1,6 @@
 ﻿using Nancy;
 
-namespace InvoiceParser.Web
+namespace InvoiceParser.Web.Modules
 {
   public class ContentModule : NancyModule
   {
