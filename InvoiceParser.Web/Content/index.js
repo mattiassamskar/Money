@@ -19,9 +19,11 @@ function dragend_handler(ev) {
     ev.dataTransfer.clearData();
 }
 
-// var req = new XMLHttpRequest();
-// req.onload = function () {
-//     var expenses = JSON.parse(req.response);
-// };
-// req.open('GET', '/expenses');
-// req.send();
+var connection = $.hubConnection();
+var contosoChatHubProxy = connection.createHubProxy('chatHub');
+contosoChatHubProxy.on('send', function(message) {
+    console.log(message);
+});
+connection.start()
+    .done(function(){ console.log('Now connected, connection ID=' + connection.id); })
+    .fail(function(){ console.log('Could not connect'); });

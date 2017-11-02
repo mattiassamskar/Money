@@ -4,6 +4,7 @@ using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.StructureMap;
 using Nancy.Conventions;
 using StructureMap;
+using StructureMap.Graph;
 
 namespace InvoiceParser.Web
 {
@@ -25,6 +26,7 @@ namespace InvoiceParser.Web
         cfg.Scan(scanner =>
         {
           scanner.Assembly(typeof(Expense).Assembly);
+          scanner.TheCallingAssembly();
           scanner.ConnectImplementationsToTypesClosing(typeof(IRequestHandler<,>));
           scanner.ConnectImplementationsToTypesClosing(typeof(INotificationHandler<>));
         });
