@@ -25,7 +25,7 @@ namespace InvoiceParser.Web
       container.Register<IMediator>((x, overloads) => new Mediator(x.Resolve, x.ResolveAll));
       container.Register<IRequestHandler<ParsePdfRequest, string>, ParsePdfHandler>();
       container.Register<IRequestHandler<ParseSkandiaStatementRequest, IEnumerable<Expense>>, ParseSkandiaStatementHandler>();
-      container.Register<INotificationHandler<Expense>, ExpenseNotificationHandler>();
+      container.Register<INotificationHandler<ExpenseCreatedNotification>, ExpenseNotificationHandler>();
     }
   }
 }

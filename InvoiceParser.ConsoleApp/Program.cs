@@ -40,7 +40,7 @@ namespace InvoiceParser.ConsoleApp
         Text = text
       });
 
-      expenses.ToList().ForEach(expense => mediator.Publish(expense));
+      expenses.ToList().ForEach(expense => mediator.Publish(new ExpenseCreatedNotification{Expense = expense}));
     }
   }
 
