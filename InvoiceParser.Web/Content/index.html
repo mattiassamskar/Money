@@ -18,9 +18,10 @@
     <input v-model="filter">
     <ol>
       <li v-for="expense in filtered(expenses, filter)">
-        {{ expense }}
+        {{ expense.Description }}
       </li>
     </ol>
+    <span>{{totalSum(expenses, filter)}}</span>
   </div>
   <script src="https://unpkg.com/vue"></script>
   <script src="index.js"></script>

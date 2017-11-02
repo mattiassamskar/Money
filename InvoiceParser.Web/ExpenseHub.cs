@@ -1,7 +1,6 @@
 ﻿using InvoiceParser.Requests;
 using MediatR;
 using Microsoft.AspNet.SignalR;
-using Newtonsoft.Json;
 
 namespace InvoiceParser.Web
 {
@@ -9,9 +8,7 @@ namespace InvoiceParser.Web
   {
     public void Handle(ExpenseCreatedNotification notification)
     {
-      var json = JsonConvert.SerializeObject(notification.Expense);
-      var hubContext = GlobalHost.ConnectionManager.GetHubContext<ExpenseHub>();
-      hubContext.Clients.All.send(json);
+      GlobalHost.ConnectionManager.GetHubContext<ExpenseHub>().Clients.All.send(notification.Expense);
     }
   }
 }

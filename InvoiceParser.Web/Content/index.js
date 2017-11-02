@@ -34,12 +34,19 @@ var app = new Vue({
     data: {
         filter: '',
         expenses: [],
+        sum: 0
     },
     methods: {
-        filtered: (expenses, filterString) => 
-            expenses.filter((expense) => 
-                filterString.split(',').filter((f) => 
-                    expense.includes(f)).length > 0)
-        
+        filtered: (expenses, filterString) =>
+            expenses.filter((expense) =>
+                filterString.split(',').filter((f) =>
+                    expense.Description.includes(f)).length > 0)
+        ,
+        totalSum: (expenses, filterString) => {
+            const amounts = expenses.filter((expense) =>
+                filterString.split(',').filter((f) =>
+                    expense.Description.includes(f)).length > 0).map(expense => expense.Amount);
+            return amounts.reduce((a, b) => a + b, 0);
+        }
     }
 })
