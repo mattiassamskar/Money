@@ -1,4 +1,6 @@
-﻿using InvoiceParser.Models;
+﻿using InvoiceParser.Handlers;
+using InvoiceParser.Models;
+using InvoiceParser.StatementParsers;
 using MediatR;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.StructureMap;
@@ -28,7 +30,9 @@ namespace InvoiceParser.Web
           scanner.Assembly(typeof(Expense).Assembly);
           scanner.TheCallingAssembly();
           scanner.ConnectImplementationsToTypesClosing(typeof(IRequestHandler<,>));
+          scanner.ConnectImplementationsToTypesClosing(typeof(IRequestHandler<>));
           scanner.ConnectImplementationsToTypesClosing(typeof(INotificationHandler<>));
+          scanner.AddAllTypesOf<IStatementParser>();
         });
         cfg.For<SingleInstanceFactory>().Use<SingleInstanceFactory>(ctx => ctx.GetInstance);
         cfg.For<MultiInstanceFactory>().Use<MultiInstanceFactory>(ctx => ctx.GetAllInstances);

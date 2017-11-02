@@ -32,9 +32,8 @@ namespace InvoiceParser.Web.Modules
       using (var destinationStream = new MemoryStream())
       {
         stream.CopyTo(destinationStream);
-        var text = await _mediator.Send(new ParsePdfRequest { Bytes = destinationStream.ToArray() });
-        await _mediator.Send(new ParseSkandiaStatementRequest { Text = text });
-        await _mediator.Send(new ParseCirclekInvoiceRequest { Text = text });
+        var lines = await _mediator.Send(new ParsePdfRequest { Bytes = destinationStream.ToArray() });
+        await _mediator.Send(new ParseStatementRequest { Lines = lines });
       }
     }
   }

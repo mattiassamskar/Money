@@ -3,7 +3,7 @@ using MediatR;
 
 namespace InvoiceParser.Requests
 {
-  public class ExpenseCreatedNotification : INotification
+  public class ExpenseNotification : INotification
   {
     public Expense Expense { get; set; }
   }

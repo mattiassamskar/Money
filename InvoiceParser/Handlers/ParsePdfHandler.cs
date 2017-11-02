@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
 using InvoiceParser.Requests;
@@ -6,9 +8,9 @@ using MediatR;
 
 namespace InvoiceParser.Handlers
 {
-  public class ParsePdfHandler : IRequestHandler<ParsePdfRequest, string>
+  public class ParsePdfHandler : IRequestHandler<ParsePdfRequest, List<string>>
   {
-    public string Handle(ParsePdfRequest message)
+    public List<string> Handle(ParsePdfRequest message)
     {
       var text = string.Empty;
 
@@ -20,7 +22,7 @@ namespace InvoiceParser.Handlers
           text += Environment.NewLine;
         }
       }
-      return text;
+      return text.Split('\n').ToList();
     }
   }
 }
