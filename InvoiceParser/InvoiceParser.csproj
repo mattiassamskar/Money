@@ -49,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstrap.cs" />
     <Compile Include="Handlers\ExpenseNotificationHandler.cs" />
     <Compile Include="Requests\ExpenseCreatedNotification.cs" />
     <Compile Include="Requests\ParseCirclekInvoiceRequest.cs" />

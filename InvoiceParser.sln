@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceParser", "InvoicePar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceParser.Tests", "InvoiceParser.Tests\InvoiceParser.Tests.csproj", "{A7F80E7F-C0D9-4A9E-9C6A-313032BB8754}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceParser.ConsoleApp", "InvoiceParser.ConsoleApp\InvoiceParser.ConsoleApp.csproj", "{DCAE6A59-4718-4CAF-B02A-535656EBDD63}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceParser.Web", "InvoiceParser.Web\InvoiceParser.Web.csproj", "{C810CC74-CD51-4110-9059-51906F74C923}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{A7F80E7F-C0D9-4A9E-9C6A-313032BB8754}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7F80E7F-C0D9-4A9E-9C6A-313032BB8754}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7F80E7F-C0D9-4A9E-9C6A-313032BB8754}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DCAE6A59-4718-4CAF-B02A-535656EBDD63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DCAE6A59-4718-4CAF-B02A-535656EBDD63}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DCAE6A59-4718-4CAF-B02A-535656EBDD63}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DCAE6A59-4718-4CAF-B02A-535656EBDD63}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C810CC74-CD51-4110-9059-51906F74C923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C810CC74-CD51-4110-9059-51906F74C923}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C810CC74-CD51-4110-9059-51906F74C923}.Release|Any CPU.ActiveCfg = Release|Any CPU
