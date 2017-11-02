@@ -19,11 +19,20 @@ function dragend_handler(ev) {
     ev.dataTransfer.clearData();
 }
 
-var connection = $.hubConnection();
-var contosoChatHubProxy = connection.createHubProxy('chatHub');
-contosoChatHubProxy.on('send', function(message) {
-    console.log(message);
-});
-connection.start()
-    .done(function(){ console.log('Now connected, connection ID=' + connection.id); })
-    .fail(function(){ console.log('Could not connect'); });
+var app = new Vue({
+    el: '#app',
+    created: () => {
+        var connection = $.hubConnection();
+        var contosoChatHubProxy = connection.createHubProxy('chatHub');
+        contosoChatHubProxy.on('send', (message) => {
+            console.log(message);
+            app.expenses.push(message);
+        });
+        connection.start()
+            .done(function () { console.log('Now connected, connection ID=' + connection.id); })
+            .fail(function () { console.log('Could not connect'); });
+    },
+    data: {
+        expenses: [],
+    }
+})
