@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using InvoiceParser.Handlers;
-using InvoiceParser.Models;
-using InvoiceParser.Requests;
+﻿using InvoiceParser.Models;
 using MediatR;
-using Nancy;
+using Nancy.Bootstrapper;
+using Nancy.Bootstrappers.StructureMap;
 using Nancy.Conventions;
-using Nancy.TinyIoc;
+using StructureMap;
 
 namespace InvoiceParser.Web
 {
-  public class Bootstrapper:DefaultNancyBootstrapper
+  public class Bootstrapper : StructureMapNancyBootstrapper
   {
     protected override void ConfigureConventions(NancyConventions nancyConventions)
     {
@@ -18,14 +16,22 @@ namespace InvoiceParser.Web
       nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory(@"/", @"/Content"));
     }
 
-    protected override void ConfigureApplicationContainer(TinyIoCContainer container)
+    protected override void ApplicationStartup(IContainer container, IPipelines pipelines)
     {
-      base.ConfigureApplicationContainer(container);
+      base.ApplicationStartup(container, pipelines);
 
-      container.Register<IMediator>((x, overloads) => new Mediator(x.Resolve, x.ResolveAll));
-      container.Register<IRequestHandler<ParsePdfRequest, string>, ParsePdfHandler>();
-      container.Register<IRequestHandler<ParseSkandiaStatementRequest, IEnumerable<Expense>>, ParseSkandiaStatementHandler>();
-      container.Register<INotificationHandler<ExpenseCreatedNotification>, ExpenseNotificationHandler>();
+      container.Configure(cfg =>
+      {
+        cfg.Scan(scanner =>
+        {
+          scanner.Assembly(typeof(Expense).Assembly);
+          scanner.ConnectImplementationsToTypesClosing(typeof(IRequestHandler<,>));
+          scanner.ConnectImplementationsToTypesClosing(typeof(INotificationHandler<>));
+        });
+        cfg.For<SingleInstanceFactory>().Use<SingleInstanceFactory>(ctx => ctx.GetInstance);
+        cfg.For<MultiInstanceFactory>().Use<MultiInstanceFactory>(ctx => ctx.GetAllInstances);
+        cfg.For<IMediator>().Use<Mediator>();
+      });
     }
   }
 }
