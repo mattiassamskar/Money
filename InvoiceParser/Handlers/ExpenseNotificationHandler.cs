@@ -1,14 +1,15 @@
 ﻿using System.Diagnostics;
-using InvoiceParser.Models;
+using InvoiceParser.Requests;
 using MediatR;
 
 namespace InvoiceParser.Handlers
 {
-  public class ExpenseNotificationHandler : INotificationHandler<Expense>
+  public class ExpenseNotificationHandler : INotificationHandler<ExpenseCreatedNotification>
   {
-    public void Handle(Expense expense)
+
+    public void Handle(ExpenseCreatedNotification notification)
     {
-      Debug.Print(expense.Date + "; " + expense.Description + "; " + expense.Amount);
+      Debug.Print(notification.Expense.Date + "; " + notification.Expense.Description + "; " + notification.Expense.Amount);
     }
   }
 }
