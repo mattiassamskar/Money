@@ -125,7 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="ChatHub.cs" />
+    <Compile Include="ExpenseHub.cs" />
     <Compile Include="Modules\ContentModule.cs" />
     <Compile Include="Modules\UploadModule.cs" />
     <Compile Include="Modules\ExpensesModule.cs" />

@@ -23,16 +23,23 @@ var app = new Vue({
     el: '#app',
     created: () => {
         var connection = $.hubConnection();
-        var contosoChatHubProxy = connection.createHubProxy('chatHub');
-        contosoChatHubProxy.on('send', (message) => {
-            console.log(message);
-            app.expenses.push(message);
+        var proxy = connection.createHubProxy('expenseHub');
+        proxy.on('send', (expense) => {
+            app.expenses.push(expense);
         });
         connection.start()
-            .done(function () { console.log('Now connected, connection ID=' + connection.id); })
-            .fail(function () { console.log('Could not connect'); });
+            .done(() => console.log('Connected'))
+            .fail(() => console.log('Could not connect'));
     },
     data: {
+        filter: '',
         expenses: [],
+    },
+    methods: {
+        filtered: (expenses, filterString) => 
+            expenses.filter((expense) => 
+                filterString.split(',').filter((f) => 
+                    expense.includes(f)).length > 0)
+        
     }
 })
