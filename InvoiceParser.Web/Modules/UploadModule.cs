@@ -14,14 +14,14 @@ namespace InvoiceParser.Web.Modules
     public UploadModule(IMediator mediator) : base("/upload")
     {
       _mediator = mediator;
-      Post["/", true] = async (x, ct) =>
+      Post["/"] = _ =>
       {
         var file = Request.Files.FirstOrDefault();
 
         if (file == null)
           return Negotiate.WithStatusCode(HttpStatusCode.BadRequest);
 
-        await ParseFile(file.Value);
+        ParseFile(file.Value).Wait();
 
         return Negotiate.WithStatusCode(HttpStatusCode.OK);
       };
@@ -33,8 +33,8 @@ namespace InvoiceParser.Web.Modules
       {
         stream.CopyTo(destinationStream);
         var text = await _mediator.Send(new ParsePdfRequest { Bytes = destinationStream.ToArray() });
-        var expenses = await _mediator.Send(new ParseSkandiaStatementRequest { Text = text });
-        expenses.ToList().ForEach(expense => _mediator.Publish(new ExpenseCreatedNotification { Expense = expense }));
+        await _mediator.Send(new ParseSkandiaStatementRequest { Text = text });
+        await _mediator.Send(new ParseCirclekInvoiceRequest { Text = text });
       }
     }
   }

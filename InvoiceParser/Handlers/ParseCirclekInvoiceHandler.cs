@@ -10,9 +10,16 @@ namespace InvoiceParser.Handlers
 {
   public class ParseCirclekInvoiceHandler : IRequestHandler<ParseCirclekInvoiceRequest, IEnumerable<Expense>>
   {
+    private readonly IMediator _mediator;
+
+    public ParseCirclekInvoiceHandler(IMediator mediator)
+    {
+      _mediator = mediator;
+    }
+
     public IEnumerable<Expense> Handle(ParseCirclekInvoiceRequest message)
     {
-      return GetExpensesFromText(message.Text);
+      return GetExpensesFromText(message.Text).ToList();
     }
 
     private IEnumerable<Expense> GetExpensesFromText(string text)
@@ -35,7 +42,10 @@ namespace InvoiceParser.Handlers
         }
 
         if (withinExpenses && TryParse(line, out var expense))
+        {
+          _mediator.Publish(new ExpenseCreatedNotification {Expense = expense});
           yield return expense;
+        }
       }
     }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 using InvoiceParser.Models;
 using InvoiceParser.Requests;
@@ -10,9 +11,16 @@ namespace InvoiceParser.Handlers
 {
   public class ParseSkandiaStatementHandler : IRequestHandler<ParseSkandiaStatementRequest, IEnumerable<Expense>>
   {
+    private readonly IMediator _mediator;
+
+    public ParseSkandiaStatementHandler(IMediator mediator)
+    {
+      _mediator = mediator;
+    }
+
     public IEnumerable<Expense> Handle(ParseSkandiaStatementRequest message)
     {
-      return GetExpensesFromText(message.Text);
+      return GetExpensesFromText(message.Text).ToList();
     }
 
     private IEnumerable<Expense> GetExpensesFromText(string text)
@@ -22,7 +30,10 @@ namespace InvoiceParser.Handlers
       foreach (var line in lines)
       {
         if (TryParse(line, out var expense))
+        {
+          _mediator.Publish(new ExpenseCreatedNotification { Expense = expense });
           yield return expense;
+        }
       }
     }
 
