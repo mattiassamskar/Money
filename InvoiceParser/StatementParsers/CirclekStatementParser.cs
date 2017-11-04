@@ -24,7 +24,7 @@ namespace InvoiceParser.StatementParsers
       if (!DateTime.TryParseExact(parts[0], "yyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateTime))
         return false;
 
-      if (!double.TryParse(parts.Last(), out var amount) || amount < 0)
+      if (!double.TryParse(parts.Last(), NumberStyles.Any, new CultureInfo("sv-SE"), out var amount) || amount < 0)
         return false;
 
       var description = string.Empty;

@@ -28,7 +28,7 @@ namespace InvoiceParser.StatementParsers
 
       var amountMatch = Regex.Match(line, @"-\d*\s*\d+,\d{2}");
 
-      if (!amountMatch.Success || !double.TryParse(amountMatch.Value, out var amount))
+      if (!amountMatch.Success || !double.TryParse(amountMatch.Value, NumberStyles.Any, new CultureInfo("sv-SE"), out var amount))
         return false;
 
       amount = Math.Abs(amount);
