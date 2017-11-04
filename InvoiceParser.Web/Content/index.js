@@ -1,24 +1,3 @@
-function drop_handler(ev) {
-    ev.preventDefault();
-
-    var dt = ev.dataTransfer;
-    for (var i = 0; i < dt.files.length; i++) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", 'upload', true);
-        var fd = new FormData();
-        fd.append("upload_file", dt.files[i]);
-        xhr.send(fd);
-    }
-}
-
-function dragover_handler(ev) {
-    ev.preventDefault();
-}
-
-function dragend_handler(ev) {
-    ev.dataTransfer.clearData();
-}
-
 var app = new Vue({
     el: '#app',
     created: () => {
@@ -47,6 +26,19 @@ var app = new Vue({
                 filterString.split(',').filter((f) =>
                     expense.Description.includes(f)).length > 0).map(expense => expense.Amount);
             return amounts.reduce((a, b) => a + b, 0);
-        }
+        },
+        drop: (ev) => {
+            ev.preventDefault();
+            var dt = ev.dataTransfer;
+            for (var i = 0; i < dt.files.length; i++) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", 'upload', true);
+                var fd = new FormData();
+                fd.append("upload_file", dt.files[i]);
+                xhr.send(fd);
+            }
+        },
+        dragover: (ev) => ev.preventDefault(),
+        dragEnd: (ev) => ev.dataTransfer.clearData(),
     }
 })
