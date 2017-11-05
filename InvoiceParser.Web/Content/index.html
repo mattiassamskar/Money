@@ -1,24 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+    crossorigin="anonymous">
   <link href="site.css" rel="stylesheet">
   <script src="jquery-1.6.4.min.js"></script>
   <script src="jquery.signalR-2.2.2.min.js"></script>
-  <title>Money money</title>
+  <title>Invoice parser</title>
 </head>
 
 <body>
-  <div id="app">
-    <div id="drop_zone" @drop="drop" @dragover="dragover" @dragend="dragEnd"></div>
-    <input v-model="filter">
-    <ol>
-      <li v-for="expense in filtered(expenses, filter)">
-        {{ expense.Description }} {{ expense.Amount.toLocaleString('sv-SE') }}
-      </li>
-    </ol>
-    <span>{{ totalSum(expenses, filter).toLocaleString('sv-SE') }}</span>
+  <div id="app" class="container">
+    <div class="jumbotron" @drop="drop" @dragover="dragover" @dragend="dragEnd">
+      <h1 class="display-3">Drop invoices here!</h1>
+    </div>
+    <div class="row">
+      <div class="col-sm align-self-center">
+        <input v-model="filter" class="form-control" placeholder="Filter with comma separated words">
+      </div>
+      <div class="col-sm text-right">
+        <h3>Sum
+          <span class="badge badge-secondary">
+            {{ totalSum(expenses, filter).toLocaleString('sv-SE') }}
+          </span>
+        </h3>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Description</th>
+              <th scope="col">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="expense in filtered(expenses, filter)">
+              <td>{{ expense.Date }}</td>
+              <td>{{ expense.Description }}</td>
+              <td>{{ expense.Amount.toLocaleString('sv-SE') }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
   <script src="https://unpkg.com/vue"></script>
   <script src="index.js"></script>
