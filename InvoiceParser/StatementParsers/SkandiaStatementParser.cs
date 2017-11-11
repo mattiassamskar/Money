@@ -27,12 +27,13 @@ namespace InvoiceParser.StatementParsers
         return false;
 
       var amountMatch = Regex.Match(line, @"-\d*\s*\d+,\d{2}");
-
       if (!amountMatch.Success || !double.TryParse(amountMatch.Value, NumberStyles.Any, new CultureInfo("sv-SE"), out var amount))
         return false;
 
       amount = Math.Abs(amount);
-      expense = new Expense { Date = dateTime, Description = line, Amount = amount };
+
+      var description = Regex.Match(line, @"(?<=.{11}).+(?= -\d*\s*\d+,\d{2}.+)").Value;
+      expense = new Expense { Date = dateTime, Description = description, Amount = amount };
       return true;
     }
   }
