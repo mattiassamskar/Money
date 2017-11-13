@@ -1,6 +1,6 @@
 var app = new Vue({
     el: '#app',
-    created: () => {
+    mounted: () => {
         var connection = $.hubConnection();
         var proxy = connection.createHubProxy('expenseHub');
         proxy.on('send', (expenses) => {

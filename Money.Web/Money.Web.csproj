@@ -153,9 +153,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Handlers\GetExpensesHandler.cs" />
     <Compile Include="Handlers\SaveStatementHandler.cs" />
     <Compile Include="HubActivator.cs" />
     <Compile Include="Hubs\ExpenseHub.cs" />
+    <Compile Include="Requests\GetExpensesRequest.cs" />
     <Compile Include="Modules\ContentModule.cs" />
     <Compile Include="Modules\UploadModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
