@@ -3,8 +3,8 @@ var app = new Vue({
     created: () => {
         var connection = $.hubConnection();
         var proxy = connection.createHubProxy('expenseHub');
-        proxy.on('send', (expense) => {
-            app.expenses.push(expense);
+        proxy.on('send', (expenses) => {
+            app.expenses.push(...expenses);
         });
         connection.start()
             .done(() => console.log('Connected'))

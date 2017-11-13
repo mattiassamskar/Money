@@ -1,7 +1,9 @@
-﻿using Money.Handlers;
-using Money.Models;
+﻿using Money.Models;
 using Money.StatementParsers;
 using MediatR;
+using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
+using Money.Db;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.StructureMap;
 using Nancy.Conventions;
@@ -23,6 +25,8 @@ namespace Money.Web
     {
       base.ApplicationStartup(container, pipelines);
 
+      GlobalHost.DependencyResolver.Register(typeof(IHubActivator), () => new HubActivator(container));
+
       container.Configure(cfg =>
       {
         cfg.Scan(scanner =>
@@ -34,6 +38,7 @@ namespace Money.Web
           scanner.ConnectImplementationsToTypesClosing(typeof(INotificationHandler<>));
           scanner.AddAllTypesOf<IStatementParser>();
         });
+        cfg.For<IDbService>().Add<MongoDbService>().Singleton();
         cfg.For<SingleInstanceFactory>().Use<SingleInstanceFactory>(ctx => ctx.GetInstance);
         cfg.For<MultiInstanceFactory>().Use<MultiInstanceFactory>(ctx => ctx.GetAllInstances);
         cfg.For<IMediator>().Use<Mediator>();
