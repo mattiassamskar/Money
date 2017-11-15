@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Money.Requests;
+﻿using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNet.SignalR;
-using Money.Models;
+using Money.Web.Notifications;
 using Money.Web.Requests;
 
 namespace Money.Web.Hubs
 {
-  public class ExpenseHub : Hub, INotificationHandler<ExpenseNotification>
+  public class ExpenseHub : Hub, INotificationHandler<ExpensesNotification>
   {
     private readonly IMediator _mediator;
 
@@ -25,10 +23,10 @@ namespace Money.Web.Hubs
       return base.OnConnected();
     }
 
-    public void Handle(ExpenseNotification notification)
+    public void Handle(ExpensesNotification notification)
     {
       GlobalHost.ConnectionManager.GetHubContext<ExpenseHub>().Clients.All
-        .send(new List<Expense> { notification.Expense });
+        .send(notification.Expenses);
     }
   }
 }

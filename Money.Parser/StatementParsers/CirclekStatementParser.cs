@@ -8,12 +8,21 @@ namespace Money.StatementParsers
 {
   public class CirclekStatementParser : IStatementParser
   {
-    public bool CanParse(List<string> lines)
+    public bool CanParse(Statement statement)
     {
-      return lines.Any(line => line.Contains("Circle K MasterCard"));
+      return statement.Lines.Any(line => line.Contains("Circle K MasterCard"));
     }
 
-    public bool TryParse(string line, out Expense expense)
+    public IEnumerable<Expense> Parse(Statement statement)
+    {
+      foreach (var line in statement.Lines)
+      {
+        if (TryParse(line, out var expense))
+          yield return expense;
+      }
+    }
+
+    private bool TryParse(string line, out Expense expense)
     {
       expense = null;
       var parts = line.Split();

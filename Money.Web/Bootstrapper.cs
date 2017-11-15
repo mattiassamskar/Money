@@ -39,6 +39,7 @@ namespace Money.Web
           scanner.AddAllTypesOf<IStatementParser>();
         });
         cfg.For<IDbService>().Add<MongoDbService>().Singleton();
+        cfg.For<IStatementService>().Add<StatementService>().Singleton();
         cfg.For<SingleInstanceFactory>().Use<SingleInstanceFactory>(ctx => ctx.GetInstance);
         cfg.For<MultiInstanceFactory>().Use<MultiInstanceFactory>(ctx => ctx.GetAllInstances);
         cfg.For<IMediator>().Use<Mediator>();

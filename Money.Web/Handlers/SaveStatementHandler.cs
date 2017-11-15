@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Money.Db;
-using Money.Requests;
+using Money.Web.Notifications;
 
 namespace Money.Web.Handlers
 {
-  public class SaveStatementHandler : INotificationHandler<ExpenseNotification>
+  public class SaveStatementHandler : INotificationHandler<ExpensesNotification>
   {
     private readonly IDbService _dbService;
 
@@ -13,9 +13,12 @@ namespace Money.Web.Handlers
       _dbService = dbService;
     }
 
-    public void Handle(ExpenseNotification notification)
+    public void Handle(ExpensesNotification notification)
     {
-      _dbService.AddExpense(notification.Expense);
+      foreach (var expense in notification.Expenses)
+      {
+        _dbService.AddExpense(expense);
+      }
     }
   }
 }

@@ -5,7 +5,7 @@ namespace Money.StatementParsers
 {
   public interface IStatementParser
   {
-    bool CanParse(List<string> lines);
-    bool TryParse(string line, out Expense expense);
+    bool CanParse(Statement statement);
+    IEnumerable<Expense> Parse(Statement statement);
   }
 }

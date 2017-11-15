@@ -33,23 +33,18 @@
     <Reference Include="itextsharp, Version=5.5.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\iTextSharp.5.5.12\lib\itextsharp.dll</HintPath>
     </Reference>
-    <Reference Include="MediatR, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MediatR.3.0.1\lib\net45\MediatR.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IStatementService.cs" />
+    <Compile Include="Models\Statement.cs" />
     <Compile Include="StatementParsers\CirclekStatementParser.cs" />
     <Compile Include="StatementParsers\IStatementParser.cs" />
-    <Compile Include="Requests\ParseStatementRequest.cs" />
-    <Compile Include="Requests\ExpenseNotification.cs" />
-    <Compile Include="Requests\ParsePdfRequest.cs" />
     <Compile Include="StatementParsers\SkandiaStatementParser.cs" />
     <Compile Include="Models\Expense.cs" />
-    <Compile Include="Handlers\ParseStatementHandler.cs" />
-    <Compile Include="Handlers\ParsePdfHandler.cs" />
+    <Compile Include="StatementService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

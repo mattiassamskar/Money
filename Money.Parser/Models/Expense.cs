@@ -1,9 +1,8 @@
 using System;
-using MediatR;
 
 namespace Money.Models
 {
-  public class Expense : INotification
+  public class Expense
   {
     public DateTime Date { get; set; }
 

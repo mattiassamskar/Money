@@ -1,8 +1,9 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Money.Requests;
 using MediatR;
+using Money.Web.Notifications;
+using Money.Web.Requests;
 using Nancy;
 
 namespace Money.Web.Modules
@@ -32,8 +33,9 @@ namespace Money.Web.Modules
       using (var destinationStream = new MemoryStream())
       {
         stream.CopyTo(destinationStream);
-        var lines = await _mediator.Send(new ParsePdfRequest { Bytes = destinationStream.ToArray() });
-        await _mediator.Send(new ParseStatementRequest { Lines = lines });
+
+        var expenses = await _mediator.Send(new ParsePdfRequest { Bytes = destinationStream.ToArray() });
+        await _mediator.Publish(new ExpensesNotification { Expenses = expenses });
       }
     }
   }
