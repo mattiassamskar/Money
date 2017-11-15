@@ -7,9 +7,7 @@ var app = new Vue({
             proxy.on('send', (expenses) => {
                 app.expenses.push(...expenses);
             });
-            connection.start()
-            .done(() => console.log('Connected'))
-            .fail(() => console.log('Could not connect'));
+            connection.start();
         }, 1000);
     },
     data: {
