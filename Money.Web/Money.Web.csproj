@@ -126,6 +126,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
+    <Content Include="Content\favicon-32x32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

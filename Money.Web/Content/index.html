@@ -10,22 +10,31 @@
   <link href="site.css" rel="stylesheet">
   <script src="jquery-1.6.4.min.js"></script>
   <script src="jquery.signalR-2.2.2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
   <title>Money</title>
 </head>
 
 <body>
   <div id="app" v-cloak class="container">
-    <div class="jumbotron" @drop="drop" @dragover="dragover" @dragend="dragEnd">
+    <!-- <div class="jumbotron" @drop="drop" @dragover="dragover" @dragend="dragEnd">
       <h1 class="display-3">Drop invoices here!</h1>
+    </div> -->
+    <div class="row">
+      <canvas id="chart" width="400" height="400"></canvas>
     </div>
     <div class="row">
       <div class="col-sm align-self-center">
-        <input v-model="filter" class="form-control" placeholder="Filter with comma separated words">
+        <div class="input-group">
+          <input v-model="filter" class="form-control" placeholder="Filter expenses">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-dark" v-on:click="updateChart">Update chart!</button>
+          </span>
+        </div>
       </div>
       <div class="col-sm text-right">
         <h3>Sum
           <span class="badge badge-secondary">
-            {{ totalSum(expenses, filter).toLocaleString('sv-SE', { style: 'currency', currency: 'SEK' }) }}
+            {{ totalSum().toLocaleString('sv-SE', { style: 'currency', currency: 'SEK' }) }}
           </span>
         </h3>
       </div>
@@ -42,7 +51,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="expense in filtered(expenses, filter)">
+            <tr v-for="expense in filtered()">
               <td>{{ new Date(expense.Date).toLocaleDateString('sv-SE') }}</td>
               <td>{{ expense.Description }}</td>
               <td class="text-right">
