@@ -11,7 +11,7 @@ var app = new Vue({
             connection.start();
         }, 1000);
         var ctx = document.getElementById("chart").getContext('2d');
-        this.chart = new Chart(ctx, { type: 'bar' });
+        this.chart = new Chart(ctx, { type: 'line', options: { legend: { display: false } } });
     },
     data: {
         filter: '',
@@ -22,12 +22,11 @@ var app = new Vue({
     methods: {
         filtered: function () {
             var self = this;
-            var hej = self.expenses.filter(function (expense) {
+            return self.expenses.filter(function (expense) {
                 return self.filter.split(',').filter(function (f) {
                     return expense.Description.includes(f)
                 }).length > 0
             });
-            return hej;
         },
         totalSum: function () {
             return this.filtered().reduce((a, b) => a + b.Amount, 0);
@@ -46,13 +45,14 @@ var app = new Vue({
         dragover: function (ev) { ev.preventDefault() },
         dragEnd: function (ev) { ev.dataTransfer.clearData() },
         updateChart: function (ev) {
-            this.chart.data.labels.pop();
-            this.chart.data.datasets = [];
-            var labels = this.filtered().map(function(e) {return e.Date});
-            var data = this.filtered().map(function (e) { return e.Amount });
+            var result = this.filtered().reduce((a, b) => {
+                a[b.Date.substring(0, 7)] = a[b.Date.substring(0, 7)] || 0;
+                a[b.Date.substring(0, 7)] = a[b.Date.substring(0, 7)] + b.Amount;
+                return a;
+            }, []);
 
-            this.chart.data.labels.push(labels);
-            this.chart.data.datasets.push({data: data });
+            this.chart.data.labels = [...Object.keys(result)];
+            this.chart.data.datasets = [{ data: [...Object.values(result)] }];
             this.chart.update();
         }
     }

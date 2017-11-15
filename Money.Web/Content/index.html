@@ -16,11 +16,8 @@
 
 <body>
   <div id="app" v-cloak class="container">
-    <!-- <div class="jumbotron" @drop="drop" @dragover="dragover" @dragend="dragEnd">
-      <h1 class="display-3">Drop invoices here!</h1>
-    </div> -->
     <div class="row">
-      <canvas id="chart" width="400" height="400"></canvas>
+      <canvas id="chart"></canvas>
     </div>
     <div class="row">
       <div class="col-sm align-self-center">
@@ -41,7 +38,7 @@
     </div>
     <br>
     <div class="row">
-      <div class="col-sm">
+      <div class="col-sm" @drop="drop" @dragover="dragover" @dragend="dragEnd">
         <table class="table">
           <thead>
             <tr>
