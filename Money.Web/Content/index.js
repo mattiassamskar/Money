@@ -1,14 +1,16 @@
 var app = new Vue({
     el: '#app',
     mounted: () => {
-        var connection = $.hubConnection();
-        var proxy = connection.createHubProxy('expenseHub');
-        proxy.on('send', (expenses) => {
-            app.expenses.push(...expenses);
-        });
-        connection.start()
+        setTimeout(() => {
+            var connection = $.hubConnection();
+            var proxy = connection.createHubProxy('expenseHub');
+            proxy.on('send', (expenses) => {
+                app.expenses.push(...expenses);
+            });
+            connection.start()
             .done(() => console.log('Connected'))
             .fail(() => console.log('Could not connect'));
+        }, 1000);
     },
     data: {
         filter: '',
