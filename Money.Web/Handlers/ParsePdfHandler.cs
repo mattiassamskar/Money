@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MediatR;
 using Money.Models;
 using Money.Web.Requests;
 
 namespace Money.Web.Handlers
 {
-  public class ParsePdfHandler : IRequestHandler<ParsePdfRequest, IEnumerable<Expense>>
+  public class ParsePdfHandler : IRequestHandler<ParsePdfRequest, ICollection<Expense>>
   {
     private readonly IStatementService _statementService;
 
@@ -13,9 +14,9 @@ namespace Money.Web.Handlers
     {
       _statementService = statementService;
     }
-    public IEnumerable<Expense> Handle(ParsePdfRequest message)
+    public ICollection<Expense> Handle(ParsePdfRequest message)
     {
-      return _statementService.Parse(message.Bytes);
+      return _statementService.Parse(message.Bytes).ToList();
     }
   }
 }

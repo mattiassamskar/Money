@@ -4,8 +4,8 @@ using Money.Models;
 
 namespace Money.Web.Requests
 {
-  public class ParsePdfRequest : IRequest<ICollection<Expense>>
+  public class SaveExpensesRequest : IRequest
   {
-    public byte[] Bytes { get; set; }
+    public IEnumerable<Expense> Expenses { get; set; }
   }
 }

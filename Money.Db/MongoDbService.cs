@@ -25,6 +25,11 @@ namespace Money.Db
       return _collection.Value.Find(new BsonDocument()).ToList().Select(edo => edo.ToExpense()).ToList();
     }
 
+    public void AddExpenses(IEnumerable<Expense> expenses)
+    {
+      expenses.ToList().ForEach(AddExpense);
+    }
+
     public void AddExpense(Expense expense)
     {
       if (!ExpenseExists(expense))

@@ -2,14 +2,12 @@ var app = new Vue({
     el: '#app',
     mounted: function () {
         var self = this;
-        setTimeout(function () {
-            var connection = $.hubConnection();
-            var proxy = connection.createHubProxy('expenseHub');
-            proxy.on('send', function(expenses) {
-                self.expenses.push(...expenses);
-            });
-            connection.start();
-        }, 1000);
+        var connection = $.hubConnection();
+        var proxy = connection.createHubProxy('expenseHub');
+        proxy.on('send', function(expenses) {
+            self.expenses.push(...expenses);
+        });
+        connection.start();
         var ctx = document.getElementById("chart").getContext('2d');
         this.chart = new Chart(ctx, { type: 'line', options: { legend: { display: false } } });
     },

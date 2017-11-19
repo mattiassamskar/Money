@@ -7,6 +7,7 @@ namespace Money.Web
     public void Configuration(IAppBuilder app)
     {
       app.MapSignalR();
+      app.UseNancy();
     }
   }
 }

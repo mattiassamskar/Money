@@ -35,6 +35,7 @@ namespace Money.Web.Modules
         stream.CopyTo(destinationStream);
 
         var expenses = await _mediator.Send(new ParsePdfRequest { Bytes = destinationStream.ToArray() });
+        await _mediator.Send(new SaveExpensesRequest { Expenses = expenses });
         await _mediator.Publish(new ExpensesNotification { Expenses = expenses });
       }
     }
