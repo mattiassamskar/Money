@@ -25,6 +25,11 @@ namespace Money.Db
       return _collection.Value.Find(new BsonDocument()).ToList().Select(edo => edo.ToExpense()).ToList();
     }
 
+    public ICollection<Expense> GetFilteredExpenses(IEnumerable<string> filters, string month)
+    {
+      return _collection.Value.FindSync(GetFilterDefinition(filters.ToList(), month)).ToList().Select(edo => edo.ToExpense()).ToList();
+    }
+
     public void AddExpenses(IEnumerable<Expense> expenses)
     {
       expenses.ToList().ForEach(AddExpense);
@@ -44,6 +49,21 @@ namespace Money.Db
                    builder.Eq(e => e.Amount, expense.Amount);
 
       return _collection.Value.Count(filter) > 0;
+    }
+
+    private static FilterDefinition<ExpenseDataObject> GetFilterDefinition(List<string> filters, string month)
+    {
+      var builder = Builders<ExpenseDataObject>.Filter;
+      var filterDefinition = FilterDefinition<ExpenseDataObject>.Empty;
+
+      if (filters != null && filters.Any())
+        filterDefinition = filterDefinition &
+                           builder.Regex(x => x.Description, new BsonRegularExpression(string.Join("|", filters), "i"));
+
+      if (month != null && month.Any())
+        filterDefinition = filterDefinition & builder.Regex(x => x.Date, new BsonRegularExpression(month));
+
+      return filterDefinition;
     }
   }
 }
