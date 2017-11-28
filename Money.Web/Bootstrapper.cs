@@ -1,14 +1,12 @@
 ﻿using Money.Models;
 using Money.StatementParsers;
 using MediatR;
-using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Hubs;
 using Money.Db;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.StructureMap;
 using Nancy.Conventions;
+using Nancy.Json;
 using StructureMap;
-using StructureMap.Graph;
 
 namespace Money.Web
 {
@@ -23,9 +21,8 @@ namespace Money.Web
 
     protected override void ApplicationStartup(IContainer container, IPipelines pipelines)
     {
+      JsonSettings.MaxJsonLength = 1000000;
       base.ApplicationStartup(container, pipelines);
-
-      GlobalHost.DependencyResolver.Register(typeof(IHubActivator), () => new HubActivator(container));
 
       container.Configure(cfg =>
       {
