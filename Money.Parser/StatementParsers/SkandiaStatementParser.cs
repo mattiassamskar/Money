@@ -11,7 +11,7 @@ namespace Money.StatementParsers
   {
     public bool CanParse(Statement statement)
     {
-      return statement.Lines.Any(line => line.Contains("Kontot omfattas av den statliga insättningsgarantin"));
+      return statement.Lines.Any(line => line.Contains("erhållet avgångsvederlag och erhållen försäkringsersättning"));
     }
 
     public IEnumerable<Expense> Parse(Statement statement)
