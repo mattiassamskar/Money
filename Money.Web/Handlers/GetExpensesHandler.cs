@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MediatR;
 using Money.Db;
 using Money.Models;
@@ -17,7 +18,9 @@ namespace Money.Web.Handlers
 
     public ICollection<Expense> Handle(GetExpensesRequest message)
     {
-      return _dbService.GetExpenses();
+      var filteredExpenses = _dbService.GetFilteredExpenses(message.Filters, message.Month).ToList();
+      filteredExpenses.Sort((a, b) => a.Date.CompareTo(b.Date));
+      return filteredExpenses;
     }
   }
 }
