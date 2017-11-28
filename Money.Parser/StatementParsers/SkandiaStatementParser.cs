@@ -18,7 +18,8 @@ namespace Money.StatementParsers
     {
       foreach (var line in statement.Lines)
       {
-        if (TryParse(line, out var expense))
+        Expense expense;
+        if (TryParse(line, out expense))
           yield return expense;
       }
     }
@@ -31,12 +32,14 @@ namespace Money.StatementParsers
       if (parts.Length < 4)
         return false;
 
+      DateTime dateTime;
       if (!DateTime.TryParseExact(parts[0], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None,
-        out var dateTime))
+        out dateTime))
         return false;
 
+      Double amount;
       var amountMatch = Regex.Match(line, @"-\d*\s*\d+,\d{2}");
-      if (!amountMatch.Success || !double.TryParse(amountMatch.Value, NumberStyles.Any, new CultureInfo("sv-SE"), out var amount))
+      if (!amountMatch.Success || !double.TryParse(amountMatch.Value, NumberStyles.Any, new CultureInfo("sv-SE"), out amount))
         return false;
 
       amount = Math.Abs(amount);

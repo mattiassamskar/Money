@@ -17,7 +17,8 @@ namespace Money.StatementParsers
     {
       foreach (var line in statement.Lines)
       {
-        if (TryParse(line, out var expense))
+        Expense expense;
+        if (TryParse(line, out expense))
           yield return expense;
       }
     }
@@ -30,10 +31,12 @@ namespace Money.StatementParsers
       if (parts.Length < 5)
         return false;
 
-      if (!DateTime.TryParseExact(parts[0], "yyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateTime))
+      DateTime dateTime;
+      if (!DateTime.TryParseExact(parts[0], "yyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
         return false;
 
-      if (!double.TryParse(parts.Last(), NumberStyles.Any, new CultureInfo("sv-SE"), out var amount) || amount < 0)
+      Double amount;
+      if (!double.TryParse(parts.Last(), NumberStyles.Any, new CultureInfo("sv-SE"), out amount) || amount < 0)
         return false;
 
       var description = string.Empty;
