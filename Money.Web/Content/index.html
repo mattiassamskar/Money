@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
-    crossorigin="anonymous">
-  <link href="site.css" rel="stylesheet">
-  <script src="jquery-1.6.4.min.js"></script>
-  <script src="jquery.signalR-2.2.2.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="site.css">
   <title>Money</title>
 </head>
 
 <body>
+  <br>
   <div id="app" v-cloak class="container">
     <div class="row">
       <canvas id="chart"></canvas>
     </div>
+    <br>
     <div class="row">
       <div class="col-sm align-self-center">
         <div class="input-group">
-          <input v-model="filter" class="form-control" placeholder="Filter expenses">
+          <input v-model="filter" class="form-control" placeholder="Search by description">
           <span class="input-group-btn">
-            <button type="button" class="btn btn-dark" v-on:click="updateChart">Update chart!</button>
+            <button type="button" class="btn btn-dark" v-on:click="updateChart">Search!</button>
+            <i v-bind:class="{ invisible: hideSpinner }" class="ml-2 fa fa-spinner fa-spin align-self-center" style="font-size:24px"></i>
           </span>
         </div>
       </div>
@@ -48,11 +48,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="expense in filtered()">
-              <td>{{ new Date(expense.Date).toLocaleDateString('sv-SE') }}</td>
-              <td>{{ expense.Description }}</td>
+            <tr v-for="expense in expenses">
+              <td>{{ new Date(expense.date).toLocaleDateString('sv-SE') }}</td>
+              <td>{{ expense.description }}</td>
               <td class="text-right">
-                {{ expense.Amount.toLocaleString('sv-SE', { style: 'currency', currency: 'SEK' }) }}
+                {{ expense.amount.toLocaleString('sv-SE', { style: 'currency', currency: 'SEK' }) }}
               </td>
             </tr>
           </tbody>
@@ -60,7 +60,8 @@
       </div>
     </div>
   </div>
-  <script src="https://unpkg.com/vue"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.9/vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
   <script src="index.js"></script>
 </body>
 
