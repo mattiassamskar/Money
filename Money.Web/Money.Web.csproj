@@ -158,7 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Money.Db\Money.Db.csproj">
-      <Project>{FAACB8B3-F767-4E90-B937-45575F71EF84}</Project>
+      <Project>{09A55C14-A71D-4C0A-9834-526B835B91EE}</Project>
       <Name>Money.Db</Name>
     </ProjectReference>
     <ProjectReference Include="..\Money.Parser\Money.Parser.csproj">
