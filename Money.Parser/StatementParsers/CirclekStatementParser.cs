@@ -10,7 +10,7 @@ namespace Money.StatementParsers
   {
     public bool CanParse(Statement statement)
     {
-      return statement.Lines.Any(line => line.Contains("Circle K Mastercard"));
+      return statement.Lines.Any(line => line.Contains("Circle K Mastercard") || line.Contains("Circle K MasterCard"));
     }
 
     public IEnumerable<Expense> Parse(Statement statement)
