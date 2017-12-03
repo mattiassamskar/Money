@@ -145,6 +145,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Handlers\GetExpensesHandler.cs" />
     <Compile Include="Handlers\ParsePdfHandler.cs" />
+    <Compile Include="Handlers\DeleteExpenseHandler.cs" />
     <Compile Include="Handlers\SaveStatementHandler.cs" />
     <Compile Include="Modules\ExpensesModule.cs" />
     <Compile Include="Notifications\ExpensesNotification.cs" />

@@ -10,24 +10,24 @@ namespace Money.Db
 {
   public class MongoDbService : IDbService
   {
-    private readonly Lazy<IMongoCollection<ExpenseDataObject>> _collection;
+    private readonly Lazy<IMongoCollection<Expense>> _collection;
 
     public MongoDbService()
     {
       var connectionString = ConfigurationManager.AppSettings["ConnectionString"];
 
-      _collection = new Lazy<IMongoCollection<ExpenseDataObject>>(() =>
-        new MongoClient(connectionString).GetDatabase("money").GetCollection<ExpenseDataObject>("expenses"));
+      _collection = new Lazy<IMongoCollection<Expense>>(() =>
+        new MongoClient(connectionString).GetDatabase("money").GetCollection<Expense>("expenses"));
     }
 
     public ICollection<Expense> GetExpenses()
     {
-      return _collection.Value.Find(new BsonDocument()).ToList().Select(edo => edo.ToExpense()).ToList();
+      return _collection.Value.Find(new BsonDocument()).ToList();
     }
 
     public ICollection<Expense> GetFilteredExpenses(IEnumerable<string> filters, string month)
     {
-      return _collection.Value.FindSync(GetFilterDefinition(filters.ToList(), month)).ToList().Select(edo => edo.ToExpense()).ToList();
+      return _collection.Value.FindSync(GetFilterDefinition(filters.ToList(), month)).ToList();
     }
 
     public void AddExpenses(IEnumerable<Expense> expenses)
@@ -38,12 +38,17 @@ namespace Money.Db
     public void AddExpense(Expense expense)
     {
       if (!ExpenseExists(expense))
-        _collection.Value.InsertOne(ExpenseDataObject.FromExpense(expense));
+        _collection.Value.InsertOne(expense);
+    }
+
+    public void DeleteExpense(ObjectId objectId)
+    {
+      _collection.Value.DeleteOne(expense => expense.Id == objectId);
     }
 
     private bool ExpenseExists(Expense expense)
     {
-      var builder = Builders<ExpenseDataObject>.Filter;
+      var builder = Builders<Expense>.Filter;
       var filter = builder.Eq(e => e.Date, expense.Date) &
                    builder.Eq(e => e.Description, expense.Description) &
                    builder.Eq(e => e.Amount, expense.Amount);
@@ -51,10 +56,10 @@ namespace Money.Db
       return _collection.Value.Count(filter) > 0;
     }
 
-    private static FilterDefinition<ExpenseDataObject> GetFilterDefinition(List<string> filters, string month)
+    private static FilterDefinition<Expense> GetFilterDefinition(List<string> filters, string month)
     {
-      var builder = Builders<ExpenseDataObject>.Filter;
-      var filterDefinition = FilterDefinition<ExpenseDataObject>.Empty;
+      var builder = Builders<Expense>.Filter;
+      var filterDefinition = FilterDefinition<Expense>.Empty;
 
       if (filters != null && filters.Any())
         filterDefinition = filterDefinition &
