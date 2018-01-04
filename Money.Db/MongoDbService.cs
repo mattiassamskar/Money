@@ -41,7 +41,7 @@ namespace Money.Db
         _collection.Value.InsertOne(expense);
     }
 
-    public void DeleteExpense(ObjectId objectId)
+    public void DeleteExpense(string objectId)
     {
       _collection.Value.DeleteOne(expense => expense.Id == objectId);
     }

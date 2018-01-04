@@ -53,6 +53,7 @@
               <td>{{ expense.description }}</td>
               <td class="text-right">
                 {{ expense.amount.toLocaleString('sv-SE', { style: 'currency', currency: 'SEK' }) }}
+                <button type="button" class="btn btn-dark" v-on:click="deleteExpense(expense.id)">Delete</button>
               </td>
             </tr>
           </tbody>

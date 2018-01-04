@@ -45,6 +45,11 @@ var app = new Vue({
         xhr.send(fd);
       }
     },
+    deleteExpense: function (id) {
+      var req = new XMLHttpRequest();
+      req.open('DELETE', '/expenses/' + id);
+      req.send();
+    },
     dragover: function (ev) { ev.preventDefault(); },
     dragEnd: function (ev) { ev.dataTransfer.clearData(); },
     updateChart: function (ev) {
