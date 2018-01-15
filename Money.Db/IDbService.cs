@@ -9,5 +9,6 @@ namespace Money.Db
     ICollection<Expense> GetFilteredExpenses(IEnumerable<string> filters, string month);
     void AddExpenses(IEnumerable<Expense> expenses);
     void AddExpense(Expense expense);
+    void DeleteExpense(string objectId);
   }
 }

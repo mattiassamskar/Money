@@ -23,6 +23,8 @@ namespace Money.Web.Modules
 
         return mediator.Send(new GetExpensesRequest { Filters = filters, Month = month }).Result;
       };
+
+      Delete["/{id}"] = parameters => mediator.Send(new DeleteExpenseRequest { Id = parameters.id });
     }
 
     private static bool ParametersAreValid(string filterString, string month)
