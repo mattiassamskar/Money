@@ -32,28 +32,17 @@ namespace Money.Db
 
     public void AddExpenses(IEnumerable<Expense> expenses)
     {
-      expenses.ToList().ForEach(AddExpense);
+      _collection.Value.InsertMany(expenses);
     }
 
     public void AddExpense(Expense expense)
     {
-      if (!ExpenseExists(expense))
-        _collection.Value.InsertOne(expense);
+      _collection.Value.InsertOne(expense);
     }
 
     public void DeleteExpense(string objectId)
     {
       _collection.Value.DeleteOne(expense => expense.Id == objectId);
-    }
-
-    private bool ExpenseExists(Expense expense)
-    {
-      var builder = Builders<Expense>.Filter;
-      var filter = builder.Eq(e => e.Date, expense.Date) &
-                   builder.Eq(e => e.Description, expense.Description) &
-                   builder.Eq(e => e.Amount, expense.Amount);
-
-      return _collection.Value.Count(filter) > 0;
     }
 
     private static FilterDefinition<Expense> GetFilterDefinition(List<string> filters, string month)
