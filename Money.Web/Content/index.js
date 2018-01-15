@@ -47,12 +47,13 @@ var app = new Vue({
     },
     deleteExpense: function (id) {
       var req = new XMLHttpRequest();
-      req.open('DELETE', '/expenses/' + id);
+      req.open('DELETE', '/expenses/' + id, false);
       req.send();
+      this.updateChart();
     },
     dragover: function (ev) { ev.preventDefault(); },
     dragEnd: function (ev) { ev.dataTransfer.clearData(); },
-    updateChart: function (ev) {
+    updateChart: function () {
       var self = this;
       self.hideSpinner = false;
       var req = new XMLHttpRequest();
