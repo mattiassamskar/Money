@@ -9,8 +9,12 @@ namespace Money.Web.Modules
 {
   public class ExpensesModule : NancyModule
   {
+    private readonly IMediator _mediator;
+
     public ExpensesModule(IMediator mediator) : base("/expenses")
     {
+      _mediator = mediator;
+
       Get["/"] = _ =>
       {
         string filterString = Request.Query["filter"];
@@ -21,10 +25,10 @@ namespace Money.Web.Modules
 
         var filters = filterString?.Split(',') ?? Enumerable.Empty<string>();
 
-        return mediator.Send(new GetExpensesRequest { Filters = filters, Month = month }).Result;
+        return _mediator.Send(new GetExpensesRequest { Filters = filters, Month = month }).Result;
       };
 
-      Delete["/{id}"] = parameters => mediator.Send(new DeleteExpenseRequest { Id = parameters.id });
+      Delete["/{id}"] = parameters => _mediator.Send(new DeleteExpenseRequest { Id = parameters.id });
     }
 
     private static bool ParametersAreValid(string filterString, string month)
