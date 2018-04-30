@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
-using Money.Models;
-using Money.StatementParsers;
+using Money.Core.Models;
 
-namespace Money
+namespace Money.Core.Services
 {
   public class StatementService : IStatementService
   {

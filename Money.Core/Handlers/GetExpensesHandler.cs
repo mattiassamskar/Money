@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MediatR;
-using Money.Db;
-using Money.Models;
-using Money.Web.Requests;
+using Money.Core.Models;
+using Money.Core.Requests;
 
-namespace Money.Web.Handlers
+namespace Money.Core.Handlers
 {
   public class GetExpensesHandler : IRequestHandler<GetExpensesRequest, ICollection<Expense>>
   {

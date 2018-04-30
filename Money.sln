@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Money.Parser", "Money.Parser\Money.Parser.csproj", "{948C0B9B-150A-4470-9145-16EBE47C54E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Money.Core", "Money.Core\Money.Core.csproj", "{948C0B9B-150A-4470-9145-16EBE47C54E4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Money.Tests", "Money.Tests\Money.Tests.csproj", "{A7F80E7F-C0D9-4A9E-9C6A-313032BB8754}"
 EndProject

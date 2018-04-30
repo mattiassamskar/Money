@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using MediatR;
-using Money.Models;
+using Money.Core.Models;
 
-namespace Money.Web.Notifications
+namespace Money.Core.Notifications
 {
   public class ExpensesNotification : INotification
   {

@@ -1,5 +1,5 @@
-﻿using Money.Models;
-using Money.StatementParsers;
+﻿using Money.Core.Models;
+using Money.Core.Services;
 using Xunit;
 
 namespace Money.Tests

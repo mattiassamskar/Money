@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Money.Models
+namespace Money.Core.Models
 {
   public class Statement
   {

@@ -2,16 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text.RegularExpressions;
-using Money.Models;
+using Money.Core.Models;
 
-namespace Money.StatementParsers
+namespace Money.Core.Services
 {
-  public class SkandiaStatementParser : IStatementParser
+  public class CirclekStatementParser : IStatementParser
   {
     public bool CanParse(Statement statement)
     {
-      return statement.Lines.Any(line => line.Contains("erhållet avgångsvederlag och erhållen försäkringsersättning"));
+      return statement.Lines.Any(line => line.Contains("Circle K Mastercard") || line.Contains("Circle K MasterCard"));
     }
 
     public IEnumerable<Expense> Parse(Statement statement)
@@ -29,22 +28,24 @@ namespace Money.StatementParsers
       expense = null;
       var parts = line.Split();
 
-      if (parts.Length < 4)
+      if (parts.Length < 5)
         return false;
 
       DateTime dateTime;
-      if (!DateTime.TryParseExact(parts[0], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None,
-        out dateTime))
+      if (!DateTime.TryParseExact(parts[0], "yyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
         return false;
 
       Double amount;
-      var amountMatch = Regex.Match(line, @"-\d*\s*\d+,\d{2}");
-      if (!amountMatch.Success || !double.TryParse(amountMatch.Value, NumberStyles.Any, new CultureInfo("sv-SE"), out amount))
+      if (!double.TryParse(parts.Last(), NumberStyles.Any, new CultureInfo("sv-SE"), out amount) || amount < 0)
         return false;
 
-      amount = Math.Abs(amount);
+      var description = string.Empty;
 
-      var description = Regex.Match(line, @"(?<=.{11}).+(?= -\d*\s*\d+,\d{2}.+)").Value;
+      for (var i = 1; i < parts.Length - 2; i++)
+      {
+        description += " " + parts[i];
+      }
+
       expense = new Expense { Date = dateTime, Description = description, Amount = amount };
       return true;
     }

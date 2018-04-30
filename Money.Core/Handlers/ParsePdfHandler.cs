@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MediatR;
-using Money.Models;
-using Money.Web.Requests;
+using Money.Core.Models;
+using Money.Core.Requests;
+using Money.Core.Services;
 
-namespace Money.Web.Handlers
+namespace Money.Core.Handlers
 {
   public class ParsePdfHandler : IRequestHandler<ParsePdfRequest, ICollection<Expense>>
   {

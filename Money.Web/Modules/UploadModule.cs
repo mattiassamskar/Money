@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
-using Money.Web.Notifications;
-using Money.Web.Requests;
+using Money.Core.Notifications;
+using Money.Core.Requests;
 using Nancy;
 
 namespace Money.Web.Modules

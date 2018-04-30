@@ -1,6 +1,7 @@
-﻿using Money.Models;
-using Money.StatementParsers;
-using MediatR;
+﻿using MediatR;
+using Money.Core;
+using Money.Core.Models;
+using Money.Core.Services;
 using Money.Db;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.StructureMap;
