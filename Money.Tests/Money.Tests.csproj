@@ -79,6 +79,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -86,9 +87,9 @@
       <Project>{09A55C14-A71D-4C0A-9834-526B835B91EE}</Project>
       <Name>Money.Db</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Money.Parser\Money.Parser.csproj">
+    <ProjectReference Include="..\Money.Core\Money.Core.csproj">
       <Project>{948c0b9b-150a-4470-9145-16ebe47c54e4}</Project>
-      <Name>Money</Name>
+      <Name>Money.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

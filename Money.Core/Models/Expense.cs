@@ -2,7 +2,7 @@ using System;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Money.Models
+namespace Money.Core.Models
 {
   public class Expense
   {

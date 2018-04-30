@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Money.Models;
+using Money.Core.Models;
 
-namespace Money.Db
+namespace Money.Core
 {
   public interface IDbService
   {

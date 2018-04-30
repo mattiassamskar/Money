@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using MediatR;
-using Money.Web.Requests;
+using Money.Core.Requests;
 using Nancy;
 
 namespace Money.Web.Modules

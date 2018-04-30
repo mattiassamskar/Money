@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using Money.Models;
+using Money.Core;
+using Money.Core.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
 

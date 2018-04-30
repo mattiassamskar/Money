@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Money.Models;
+using Money.Core.Models;
 
-namespace Money.StatementParsers
+namespace Money.Core.Services
 {
   public interface IStatementParser
   {

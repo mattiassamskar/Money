@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using MediatR;
-using Money.Models;
+using Money.Core.Models;
 
-namespace Money.Web.Requests
+namespace Money.Core.Requests
 {
   public class GetExpensesRequest : IRequest<ICollection<Expense>>
   {
