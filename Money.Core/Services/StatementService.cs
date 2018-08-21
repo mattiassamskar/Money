@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using iTextSharp.text.pdf;
-using iTextSharp.text.pdf.parser;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas.Parser;
 using Money.Core.Models;
 
 namespace Money.Core.Services
@@ -33,11 +34,13 @@ namespace Money.Core.Services
     {
       var text = string.Empty;
 
-      using (var pdfReader = new PdfReader(bytes))
+      using (var pdfReader = new PdfReader(new MemoryStream(bytes)))
       {
-        for (var i = 1; i <= pdfReader.NumberOfPages; i++)
+        var pdfDocument = new PdfDocument(pdfReader);
+
+        for (var i = 1; i <= pdfDocument.GetNumberOfPages(); i++)
         {
-          text += PdfTextExtractor.GetTextFromPage(pdfReader, i);
+          text += PdfTextExtractor.GetTextFromPage(pdfDocument.GetPage(i));
           text += Environment.NewLine;
         }
       }

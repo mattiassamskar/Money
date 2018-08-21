@@ -6,7 +6,7 @@ using Money.Core.Requests;
 
 namespace Money.Core.Handlers
 {
-  public class GetExpensesHandler : IRequestHandler<GetExpensesRequest, ICollection<Expense>>
+  public class GetExpensesHandler : RequestHandler<GetExpensesRequest, ICollection<Expense>>
   {
     private readonly IDbService _dbService;
 
@@ -14,10 +14,9 @@ namespace Money.Core.Handlers
     {
       _dbService = dbService;
     }
-
-    public ICollection<Expense> Handle(GetExpensesRequest message)
+    protected override ICollection<Expense> Handle(GetExpensesRequest request)
     {
-      var filteredExpenses = _dbService.GetFilteredExpenses(message.Filters, message.Month).ToList();
+      var filteredExpenses = _dbService.GetFilteredExpenses(request.Filters, request.Month).ToList();
       filteredExpenses.Sort((a, b) => a.Date.CompareTo(b.Date));
       return filteredExpenses;
     }
