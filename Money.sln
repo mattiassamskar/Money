@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Money.Db", "Money.Db\Money.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Money.Tests", "Money.Tests\Money.Tests.csproj", "{517F09D3-5C88-4D97-B485-9C8026CA8DE8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Money.Web", "Money.Web\Money.Web.csproj", "{BF8D4B19-3A42-4EC5-996C-615CF3001B53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,5 +60,17 @@ Global
 		{517F09D3-5C88-4D97-B485-9C8026CA8DE8}.Release|x64.Build.0 = Release|Any CPU
 		{517F09D3-5C88-4D97-B485-9C8026CA8DE8}.Release|x86.ActiveCfg = Release|Any CPU
 		{517F09D3-5C88-4D97-B485-9C8026CA8DE8}.Release|x86.Build.0 = Release|Any CPU
+		{BF8D4B19-3A42-4EC5-996C-615CF3001B53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF8D4B19-3A42-4EC5-996C-615CF3001B53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF8D4B19-3A42-4EC5-996C-615CF3001B53}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BF8D4B19-3A42-4EC5-996C-615CF3001B53}.Debug|x64.Build.0 = Debug|Any CPU
+		{BF8D4B19-3A42-4EC5-996C-615CF3001B53}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BF8D4B19-3A42-4EC5-996C-615CF3001B53}.Debug|x86.Build.0 = Debug|Any CPU
+		{BF8D4B19-3A42-4EC5-996C-615CF3001B53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF8D4B19-3A42-4EC5-996C-615CF3001B53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF8D4B19-3A42-4EC5-996C-615CF3001B53}.Release|x64.ActiveCfg = Release|Any CPU
+		{BF8D4B19-3A42-4EC5-996C-615CF3001B53}.Release|x64.Build.0 = Release|Any CPU
+		{BF8D4B19-3A42-4EC5-996C-615CF3001B53}.Release|x86.ActiveCfg = Release|Any CPU
+		{BF8D4B19-3A42-4EC5-996C-615CF3001B53}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

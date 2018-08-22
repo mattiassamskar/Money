@@ -10,9 +10,9 @@ namespace Money.Core.Services
 {
   public class StatementService : IStatementService
   {
-    private readonly List<IStatementParser> _statementParsers;
+    private readonly IEnumerable<IStatementParser> _statementParsers;
 
-    public StatementService(List<IStatementParser> statementParsers)
+    public StatementService(IEnumerable<IStatementParser> statementParsers)
     {
       _statementParsers = statementParsers;
     }
