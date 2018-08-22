@@ -8,29 +8,7 @@ namespace Money.Db
 {
   public class FakeDbService : IDbService
   {
-    public void AddExpense(Expense expense)
-    {
-      throw new NotImplementedException();
-    }
-
-    public void AddExpenses(IEnumerable<Expense> expenses)
-    {
-      throw new NotImplementedException();
-    }
-
-    public void DeleteExpense(string objectId)
-    {
-      throw new NotImplementedException();
-    }
-
-    public ICollection<Expense> GetExpenses()
-    {
-      throw new NotImplementedException();
-    }
-
-    public ICollection<Expense> GetFilteredExpenses(IEnumerable<string> filters, string month)
-    {
-      var expenses = new List<Expense>
+    private List<Expense> _expenses = new List<Expense>
       {
         new Expense
         {
@@ -46,9 +24,31 @@ namespace Money.Db
         }
       };
 
-      return filters.Any() 
-        ? expenses.Where(expense => filters.Any(filter => expense.Description.Contains(filter))).ToList() 
-        : expenses;
+    public void AddExpense(Expense expense)
+    {
+      throw new NotImplementedException();
+    }
+
+    public void AddExpenses(IEnumerable<Expense> expenses)
+    {
+      _expenses.AddRange(expenses);
+    }
+
+    public void DeleteExpense(string objectId)
+    {
+      throw new NotImplementedException();
+    }
+
+    public ICollection<Expense> GetExpenses()
+    {
+      throw new NotImplementedException();
+    }
+
+    public ICollection<Expense> GetFilteredExpenses(IEnumerable<string> filters, string month)
+    {
+      return filters.Any()
+        ? _expenses.Where(expense => filters.Any(filter => expense.Description.Contains(filter))).ToList()
+        : _expenses;
     }
   }
 }
