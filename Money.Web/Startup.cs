@@ -20,13 +20,6 @@ namespace Money.Web
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddMvc();
-      services.AddMvc();
-      services.Configure<FormOptions>(x =>
-      {
-        x.ValueLengthLimit = int.MaxValue;
-        x.MultipartBodyLengthLimit = int.MaxValue;
-      });
-
       services.AddMediatR(typeof(Expense).Assembly);
       services.AddSingleton<IDbService, FakeDbService>();
       services.AddSingleton<IStatementService, StatementService>();
