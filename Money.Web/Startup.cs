@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Money.Core;
 using Money.Core.Models;
@@ -17,11 +18,19 @@ namespace Money.Web
 {
   public class Startup
   {
+    public Startup(IConfiguration configuration)
+    {
+      Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; }
+
     public void ConfigureServices(IServiceCollection services)
     {
+      services.Configure<Options>(Configuration);
       services.AddMvc();
       services.AddMediatR(typeof(Expense).Assembly);
-      services.AddSingleton<IDbService, FakeDbService>();
+      services.AddSingleton<IDbService, MongoDbService>();
       services.AddSingleton<IStatementService, StatementService>();
       services.AddSingleton<IStatementParser, CirclekStatementParser>();
       services.AddSingleton<IStatementParser, SkandiaStatementParser>();
