@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using Microsoft.Extensions.Options;
 using Money.Core;
 using Money.Core.Models;
 using MongoDB.Bson;
@@ -13,12 +14,12 @@ namespace Money.Db
   {
     private readonly Lazy<IMongoCollection<Expense>> _collection;
 
-    public MongoDbService()
+    public MongoDbService(IOptions<Options> options)
     {
-      var connectionString = ConfigurationManager.AppSettings["ConnectionString"];
-
       _collection = new Lazy<IMongoCollection<Expense>>(() =>
-        new MongoClient(connectionString).GetDatabase("money").GetCollection<Expense>("expenses"));
+        new MongoClient(options.Value.ConnectionString)
+          .GetDatabase("money")
+          .GetCollection<Expense>("expenses"));
     }
 
     public ICollection<Expense> GetExpenses()

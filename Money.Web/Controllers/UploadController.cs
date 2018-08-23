@@ -1,31 +1,36 @@
-﻿using System.IO;
-using System.Linq;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Money.Core.Notifications;
 using Money.Core.Requests;
-using Nancy;
 
-namespace Money.Web.Modules
+namespace Money.Web
 {
-  public class UploadModule : NancyModule
+  [ApiController]
+  [Route("[controller]")]
+  public class UploadController : ControllerBase
   {
     private readonly IMediator _mediator;
 
-    public UploadModule(IMediator mediator) : base("/upload")
+    public UploadController(IMediator mediator)
     {
       _mediator = mediator;
-      Post["/"] = _ =>
+    }
+
+    [HttpPost]
+    public ActionResult Post()
+    {
+      var files = Request.Form.Files;
+
+      foreach (var file in files)
       {
-        var file = Request.Files.FirstOrDefault();
+        ParseFile(file.OpenReadStream()).Wait();
+      }
 
-        if (file == null)
-          return Negotiate.WithStatusCode(HttpStatusCode.BadRequest);
-
-        ParseFile(file.Value).Wait();
-
-        return Negotiate.WithStatusCode(HttpStatusCode.OK);
-      };
+      return Ok();
     }
 
     private async Task ParseFile(Stream stream)

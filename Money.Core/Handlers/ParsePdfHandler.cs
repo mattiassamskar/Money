@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using MediatR;
 using Money.Core.Models;
 using Money.Core.Requests;
@@ -7,7 +9,7 @@ using Money.Core.Services;
 
 namespace Money.Core.Handlers
 {
-  public class ParsePdfHandler : IRequestHandler<ParsePdfRequest, ICollection<Expense>>
+  public class ParsePdfHandler : RequestHandler<ParsePdfRequest, ICollection<Expense>>
   {
     private readonly IStatementService _statementService;
 
@@ -15,9 +17,10 @@ namespace Money.Core.Handlers
     {
       _statementService = statementService;
     }
-    public ICollection<Expense> Handle(ParsePdfRequest message)
+
+    protected override ICollection<Expense> Handle(ParsePdfRequest request)
     {
-      return _statementService.Parse(message.Bytes).ToList();
+      return _statementService.Parse(request.Bytes).ToList();
     }
   }
 }

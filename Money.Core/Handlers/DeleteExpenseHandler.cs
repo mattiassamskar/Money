@@ -1,9 +1,11 @@
-﻿using MediatR;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 using Money.Core.Requests;
 
 namespace Money.Core.Handlers
 {
-  public class DeleteExpenseHandler : IRequestHandler<DeleteExpenseRequest>
+  public class DeleteExpenseHandler : AsyncRequestHandler<DeleteExpenseRequest>
   {
     private readonly IDbService _dbService;
 
@@ -12,9 +14,9 @@ namespace Money.Core.Handlers
       _dbService = dbService;
     }
 
-    public void Handle(DeleteExpenseRequest message)
+    protected override Task Handle(DeleteExpenseRequest request, CancellationToken cancellationToken)
     {
-      _dbService.DeleteExpense(message.Id);
+      return Task.Run(() => _dbService.DeleteExpense(request.Id));
     }
   }
 }
