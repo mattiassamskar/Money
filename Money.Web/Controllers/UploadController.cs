@@ -23,21 +23,19 @@ namespace Money.Web
     [HttpPost]
     public ActionResult Post()
     {
-      var files = Request.Form.Files;
-
-      foreach (var file in files)
+      foreach (var file in Request.Form.Files)
       {
-        ParseFile(file.OpenReadStream()).Wait();
+        ParseFile(file).Wait();
       }
 
       return Ok();
     }
 
-    private async Task ParseFile(Stream stream)
+    private async Task ParseFile(IFormFile file)
     {
       using (var destinationStream = new MemoryStream())
       {
-        stream.CopyTo(destinationStream);
+        file.CopyTo(destinationStream);
 
         var expenses = await _mediator.Send(new ParsePdfRequest { Bytes = destinationStream.ToArray() });
         await _mediator.Send(new SaveExpensesRequest { Expenses = expenses });
