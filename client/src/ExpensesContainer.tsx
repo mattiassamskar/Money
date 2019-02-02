@@ -31,7 +31,7 @@ class ExpensesContainer extends Component<Props, State> {
     return (
       <Row>
         <Col span={24} className="container-margin">
-          <Table dataSource={this.props.expenses} columns={this.columns} />;
+          <Table dataSource={this.props.expenses} columns={this.columns} />
         </Col>
       </Row>
     );

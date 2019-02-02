@@ -3,6 +3,7 @@ import "./App.css";
 import "antd/dist/antd.css";
 import ExpensesContainer from "./ExpensesContainer";
 import SearchContainer from "./SearchContainer";
+import { Layout, Row, Col } from "antd";
 
 export interface Expense {
   id: string;
@@ -36,8 +37,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <SearchContainer />
-        <ExpensesContainer expenses={this.expenses} />
+        <Row>
+          <Col xs={0} md={3} />
+          <Col xs={24} md={18}>
+            <SearchContainer />
+            <ExpensesContainer expenses={this.expenses} />
+          </Col>
+          <Col xs={0} md={3} />
+        </Row>
       </div>
     );
   }
