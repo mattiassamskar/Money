@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Expense } from "./App";
-import Table from "antd/lib/table";
+import { Table, Row, Col } from "antd";
 
 interface Props {
   expenses: Expense[];
@@ -28,7 +28,13 @@ class ExpensesContainer extends Component<Props, State> {
   ];
 
   render() {
-    return <Table dataSource={this.props.expenses} columns={this.columns} />;
+    return (
+      <Row>
+        <Col span={24} className="container-margin">
+          <Table dataSource={this.props.expenses} columns={this.columns} />;
+        </Col>
+      </Row>
+    );
   }
 }
 
