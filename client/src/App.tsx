@@ -3,6 +3,7 @@ import "./App.css";
 import "antd/dist/antd.css";
 import { Row, Col } from "antd";
 import ExpensesContainer from "./ExpensesContainer";
+import SearchContainer from "./SearchContainer";
 
 export interface Expense {
   id: string;
@@ -36,6 +37,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Row>
+          <Col span={24}>
+            <SearchContainer />
+          </Col>
+        </Row>
         <Row>
           <Col span={24}>
             <ExpensesContainer expenses={this.expenses} />
