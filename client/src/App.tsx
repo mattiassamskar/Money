@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import "antd/dist/antd.css";
 
 export interface Expense {
   id: string;
@@ -10,7 +11,10 @@ export interface Expense {
 
 class App extends Component {
   render() {
-    return <div className="App" />;
+    return (
+      <div className="App">
+      </div>
+    );
   }
 }
 
