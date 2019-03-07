@@ -30,7 +30,7 @@ namespace Money.Web
       services.Configure<Options>(Configuration);
       services.AddMvc();
       services.AddMediatR(typeof(Expense).Assembly);
-      services.AddSingleton<IDbService, FakeDbService>();
+      services.AddSingleton<IDbService, MongoDbService>();
       services.AddSingleton<IStatementService, StatementService>();
       services.AddSingleton<IStatementParser, CirclekStatementParser>();
       services.AddSingleton<IStatementParser, SkandiaStatementParser>();
@@ -40,7 +40,7 @@ namespace Money.Web
     {
       if (env.IsDevelopment())
       {
-        app.UseDeveloperExceptionPage();
+        app.UseDeveloperExceptionPage();  
       }
 
       app.UseDefaultFiles();
