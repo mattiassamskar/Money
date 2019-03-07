@@ -1,19 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input, Row, Col, Button } from "antd";
+import { Expense } from "./App";
 
-class SearchContainer extends React.Component {
-  render() {
-    return (
-    <Row gutter={16} type="flex" justify="center" className="container-margin">
-        <Col span={8}>
-          <Input placeholder="Sökord.." />
-        </Col>
-        <Col span={8}>
-          <Button type="primary">Sök!</Button>
-        </Col>
-      </Row>
-    );
-  }
+interface Props {
+  setExpenses: (expenses: Expense[]) => void;
 }
+
+const SearchContainer = (props: Props) => {
+  const [filter, setFilter] = useState("");
+
+  const fetchExpenses = () => {
+    fetch("/expenses?filter=" + filter)
+      .then(result => result.json())
+      .then(expenses => props.setExpenses(expenses));
+  };
+
+  return (
+    <Row gutter={16} type="flex" justify="center" className="container-margin">
+      <Col span={8}>
+        <Input
+          placeholder="Sökord.."
+          value={filter}
+          onChange={text => setFilter(text.target.value)}
+        />
+      </Col>
+      <Col span={8}>
+        <Button type="primary" onClick={fetchExpenses} >Sök!</Button>
+      </Col>
+    </Row>
+  );
+};
 
 export default SearchContainer;
