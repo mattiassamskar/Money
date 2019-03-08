@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Expense } from "./App";
 import { Table, Row, Col } from "antd";
 
@@ -6,10 +6,8 @@ interface Props {
   expenses: Expense[];
 }
 
-interface State {}
-
-class ExpensesContainer extends Component<Props, State> {
-  columns = [
+export const ExpensesContainer = (props: Props) => {
+  const columns = [
     {
       title: "Datum",
       dataIndex: "date",
@@ -27,15 +25,11 @@ class ExpensesContainer extends Component<Props, State> {
     }
   ];
 
-  render() {
-    return (
-      <Row>
-        <Col span={24} className="container-margin">
-          <Table dataSource={this.props.expenses} columns={this.columns} />
-        </Col>
-      </Row>
-    );
-  }
-}
-
-export default ExpensesContainer;
+  return (
+    <Row>
+      <Col span={24} className="container-margin">
+        <Table dataSource={props.expenses} columns={columns} />
+      </Col>
+    </Row>
+  );
+};

@@ -6,7 +6,7 @@ interface Props {
   setExpenses: (expenses: Expense[]) => void;
 }
 
-const SearchContainer = (props: Props) => {
+export const SearchContainer = (props: Props) => {
   const [filter, setFilter] = useState("");
 
   const fetchExpenses = () => {
@@ -30,5 +30,3 @@ const SearchContainer = (props: Props) => {
     </Row>
   );
 };
-
-export default SearchContainer;
