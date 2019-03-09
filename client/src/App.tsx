@@ -5,10 +5,11 @@ import { ExpensesContainer } from "./ExpensesContainer";
 import { SearchContainer } from "./SearchContainer";
 import { Row, Col } from "antd";
 import { ChartContainer } from "./ChartContainer";
+import moment from "moment";
 
 export interface Expense {
   id: string;
-  date: string;
+  date: moment.Moment;
   description: string;
   amount: number;
 }

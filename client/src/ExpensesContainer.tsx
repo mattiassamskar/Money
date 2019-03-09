@@ -1,6 +1,7 @@
 import React from "react";
 import { Expense } from "./App";
 import { Table, Row, Col } from "antd";
+import moment from "moment";
 
 interface Props {
   expenses: Expense[];
@@ -11,7 +12,8 @@ export const ExpensesContainer = (props: Props) => {
     {
       title: "Datum",
       dataIndex: "date",
-      key: "date"
+      key: "date",
+      render: (date: moment.Moment) => <div>{date.format("YYYY-MM-DD")}</div>
     },
     {
       title: "Beskrivning",

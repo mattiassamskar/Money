@@ -10,6 +10,7 @@
     "antd": "^3.13.0",
     "highcharts": "^7.0.3",
     "highcharts-react-official": "^2.1.1",
+    "moment": "^2.24.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-scripts": "2.1.3",

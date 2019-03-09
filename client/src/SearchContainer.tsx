@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Input, Row, Col, Button } from "antd";
 import { Expense } from "./App";
+import moment from "moment";
 
 interface Props {
   setExpenses: (expenses: Expense[]) => void;
@@ -12,7 +13,10 @@ export const SearchContainer = (props: Props) => {
   const fetchExpenses = () => {
     fetch("/expenses?filter=" + filter)
       .then(result => result.json())
-      .then(expenses => props.setExpenses(expenses));
+      .then((expenses: Expense[]) => {
+        expenses.forEach(expense => (expense.date = moment.utc(expense.date)));
+        props.setExpenses(expenses);
+      });
   };
 
   return (
@@ -25,7 +29,9 @@ export const SearchContainer = (props: Props) => {
         />
       </Col>
       <Col span={8}>
-        <Button type="primary" onClick={fetchExpenses} >Sök!</Button>
+        <Button type="primary" onClick={fetchExpenses}>
+          Sök!
+        </Button>
       </Col>
     </Row>
   );
