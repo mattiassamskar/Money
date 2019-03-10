@@ -17,7 +17,7 @@ namespace Money.Db
     public MongoDbService(IOptions<Options> options)
     {
       _collection = new Lazy<IMongoCollection<Expense>>(() =>
-        new MongoClient(options.Value.ConnectionString)
+        new MongoClient(options.Value.MoneyDbConnectionString)
           .GetDatabase("money")
           .GetCollection<Expense>("expenses"));
     }
