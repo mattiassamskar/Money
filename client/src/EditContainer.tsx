@@ -67,10 +67,17 @@ export const EditContainer = () => {
       key: "amount"
     },
     {
-      title: "Dublett",
       dataIndex: "isDuplicate",
       key: "isDuplicate",
-      render: (value: boolean) => <div>{value.toString()}</div>
+      render: (value: boolean) => {
+        return value === true ? (
+          <div style={{ textAlign: "center", background: "orange" }}>
+            Dublett
+          </div>
+        ) : (
+          undefined
+        );
+      }
     }
   ];
 
