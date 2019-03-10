@@ -6,6 +6,7 @@ import { SearchContainer } from "./SearchContainer";
 import { Row, Col } from "antd";
 import { ChartContainer } from "./ChartContainer";
 import moment from "moment";
+import "moment/locale/sv";
 
 export interface Expense {
   id: string;
@@ -15,6 +16,7 @@ export interface Expense {
 }
 
 const App = () => {
+  moment.locale("sv");
   const [expenses, setExpenses] = useState<Array<Expense>>([]);
 
   return (
