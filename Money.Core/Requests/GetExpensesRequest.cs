@@ -9,9 +9,4 @@ namespace Money.Core.Requests
     public IEnumerable<string> Filters { get; set; }
     public string Month { get; set; }
   }
-
-  public class DeleteExpenseRequest : IRequest
-  {
-    public string Id { get; set; }
-  }
 }

@@ -32,6 +32,13 @@ namespace Money.Web
       return Ok(result);
     }
 
+    [HttpDelete]
+    public ActionResult Delete(string id)
+    {
+      _mediator.Send(new DeleteExpenseRequest{ Id = id});
+      return Ok();
+    }
+
     private static bool ParametersAreValid(string filterString, string month)
     {
       return string.IsNullOrEmpty(month) || DateTime.TryParseExact(month, "yyyy-MM", 
