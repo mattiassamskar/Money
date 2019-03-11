@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Expense } from "./App";
-import { Table, Row, Col } from "antd";
+import { Table, Row, Col, Button } from "antd";
 import moment from "moment";
 
 export interface EditExpense {
@@ -12,12 +12,10 @@ export interface EditExpense {
 }
 
 export const EditContainer = () => {
-  const [expenses, setExpenses] = useState<Array<Expense>>([]);
+  const [expenses, setExpenses] = useState<Array<EditExpense>>([]);
 
   useEffect(() => {
-    fetch("/expenses")
-      .then(result => result.json())
-      .then((expenses: Expense[]) => setExpenses(transformExpenses(expenses)));
+    getEditExpenses();
   }, []);
 
   const transformExpenses = (expenses: Expense[]): EditExpense[] => {
@@ -49,6 +47,18 @@ export const EditContainer = () => {
         expense.amount === editExpense.amount
     ).length > 1;
 
+  const getEditExpenses = () => {
+    fetch("/expenses")
+      .then(result => result.json())
+      .then((expenses: Expense[]) => setExpenses(transformExpenses(expenses)));
+  };
+
+  const deleteExpense = (id: string) => {
+    fetch("/expenses?id=" + id, { method: "DELETE" }).then(() =>
+      getEditExpenses()
+    );
+  };
+
   const columns = [
     {
       title: "Datum",
@@ -67,13 +77,12 @@ export const EditContainer = () => {
       key: "amount"
     },
     {
+      title: "Dublett",
       dataIndex: "isDuplicate",
       key: "isDuplicate",
-      render: (value: boolean) => {
+      render: (value: boolean, editExpense: EditExpense) => {
         return value === true ? (
-          <div style={{ textAlign: "center", background: "orange" }}>
-            Dublett
-          </div>
+          <Button onClick={() => deleteExpense(editExpense.id)}>Ta bort</Button>
         ) : (
           undefined
         );
