@@ -35,13 +35,13 @@ namespace Money.Web
     [HttpDelete]
     public ActionResult Delete(string id)
     {
-      _mediator.Send(new DeleteExpenseRequest{ Id = id});
+      _mediator.Send(new DeleteExpenseRequest { Id = id }).Wait();
       return Ok();
     }
 
     private static bool ParametersAreValid(string filterString, string month)
     {
-      return string.IsNullOrEmpty(month) || DateTime.TryParseExact(month, "yyyy-MM", 
+      return string.IsNullOrEmpty(month) || DateTime.TryParseExact(month, "yyyy-MM",
         CultureInfo.InvariantCulture, DateTimeStyles.None, out var _);
     }
   }
