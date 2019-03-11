@@ -14,6 +14,7 @@ export interface Expense {
   date: moment.Moment;
   description: string;
   amount: number;
+  notDuplicate: boolean | null;
 }
 
 const App = () => {

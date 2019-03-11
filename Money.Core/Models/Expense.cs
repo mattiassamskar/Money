@@ -15,5 +15,7 @@ namespace Money.Core.Models
     public string Description { get; set; }
 
     public double Amount { get; set; }
+
+    public bool? NotDuplicate { get; set; }
   }
 }

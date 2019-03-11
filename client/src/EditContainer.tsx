@@ -8,7 +8,8 @@ export interface EditExpense {
   date: moment.Moment;
   description: string;
   amount: number;
-  isDuplicate: boolean;
+  notDuplicate: boolean | null;
+  askIfDuplicate: boolean;
 }
 
 export const EditContainer = () => {
@@ -24,20 +25,26 @@ export const EditContainer = () => {
         id: expense.id,
         date: moment.utc(expense.date),
         description: expense.description,
-        amount: expense.amount
+        amount: expense.amount,
+        notDuplicate: expense.notDuplicate
       } as EditExpense;
     });
 
-    editExpenses.forEach(
-      editExpense =>
-        (editExpense.isDuplicate = findDuplicates(editExpenses, editExpense))
-    );
+    editExpenses
+      .filter(editExpense => editExpense.notDuplicate !== true)
+      .forEach(
+        editExpense =>
+          (editExpense.askIfDuplicate = findDuplicates(
+            editExpenses,
+            editExpense
+          ))
+      );
 
     return editExpenses;
   };
 
   const findDuplicates = (
-    editExpenses: Expense[],
+    editExpenses: EditExpense[],
     editExpense: EditExpense
   ): boolean =>
     editExpenses.filter(
@@ -78,8 +85,8 @@ export const EditContainer = () => {
     },
     {
       title: "Dublett",
-      dataIndex: "isDuplicate",
-      key: "isDuplicate",
+      dataIndex: "askIfDuplicate",
+      key: "askIfDuplicate",
       render: (value: boolean, editExpense: EditExpense) => {
         return value === true ? (
           <Button onClick={() => deleteExpense(editExpense.id)}>Ta bort</Button>
