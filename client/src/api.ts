@@ -1,5 +1,5 @@
 import moment from "moment";
-import { Expense } from "./App";
+import { Expense } from "./MainContainer";
 
 export const getExpenses = async (filter?: string) => {
   try {

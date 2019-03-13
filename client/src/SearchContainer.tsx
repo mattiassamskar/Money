@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Input, Row, Col, Button } from "antd";
-import { Expense } from "./App";
+import { Expense } from "./MainContainer";
 import { getExpenses } from "./api";
 
 interface Props {
@@ -16,7 +16,7 @@ export const SearchContainer = (props: Props) => {
   };
 
   return (
-    <Row gutter={16} type="flex" justify="center" className="container-margin">
+    <Row type="flex" justify="center" className="container-margin">
       <Col span={8}>
         <Input
           placeholder="Sökord.."
@@ -24,7 +24,7 @@ export const SearchContainer = (props: Props) => {
           onChange={text => setFilter(text.target.value)}
         />
       </Col>
-      <Col span={8}>
+      <Col span={16}>
         <Button type="primary" onClick={fetchExpenses}>
           Sök!
         </Button>

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Input, Row, Col, Button } from "antd";
-import { Expense } from "./App";
+import React  from "react";
+import { Row } from "antd";
+import { Expense } from "./MainContainer";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import moment from "moment";

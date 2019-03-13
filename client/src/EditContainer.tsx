@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Expense } from "./App";
+import { Expense } from "./MainContainer";
 import { Table, Row, Col, Button } from "antd";
 import moment from "moment";
 import { getExpenses } from "./api";

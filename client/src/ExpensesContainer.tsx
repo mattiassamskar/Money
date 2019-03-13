@@ -1,5 +1,5 @@
 import React from "react";
-import { Expense } from "./App";
+import { Expense } from "./MainContainer";
 import { Table, Row, Col } from "antd";
 import moment from "moment";
 
