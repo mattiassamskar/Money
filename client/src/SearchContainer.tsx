@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Input, Row, Col, Button } from "antd";
 import { Expense } from "./App";
-import moment from "moment";
+import { getExpenses } from "./api";
 
 interface Props {
   setExpenses: (expenses: Expense[]) => void;
@@ -10,13 +10,9 @@ interface Props {
 export const SearchContainer = (props: Props) => {
   const [filter, setFilter] = useState("");
 
-  const fetchExpenses = () => {
-    fetch("/expenses?filter=" + filter)
-      .then(result => result.json())
-      .then((expenses: Expense[]) => {
-        expenses.forEach(expense => (expense.date = moment.utc(expense.date)));
-        props.setExpenses(expenses);
-      });
+  const fetchExpenses = async () => {
+    const expenses = await getExpenses(filter);
+    props.setExpenses(expenses);
   };
 
   return (

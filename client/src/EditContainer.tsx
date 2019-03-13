@@ -2,69 +2,53 @@ import React, { useState, useEffect } from "react";
 import { Expense } from "./App";
 import { Table, Row, Col, Button } from "antd";
 import moment from "moment";
+import { getExpenses } from "./api";
 
-export interface EditExpense {
+interface EditExpense {
   id: string;
   date: moment.Moment;
   description: string;
   amount: number;
-  notDuplicate: boolean | null;
   askIfDuplicate: boolean;
 }
 
 export const EditContainer = () => {
-  const [expenses, setExpenses] = useState<Array<EditExpense>>([]);
+  const [editExpenses, setEditExpenses] = useState<Array<EditExpense>>([]);
 
   useEffect(() => {
-    getEditExpenses();
+    fetchExpenses();
   }, []);
 
+  const fetchExpenses = async () => {
+    const expenses = await getExpenses();
+    setEditExpenses(transformExpenses(expenses));
+  };
+
+  const deleteExpense = async (id: string) => {
+    await deleteExpense(id);
+    fetchExpenses();
+  };
+
   const transformExpenses = (expenses: Expense[]): EditExpense[] => {
-    const editExpenses = expenses.map(expense => {
+    return expenses.map(expense => {
       return {
         id: expense.id,
         date: moment.utc(expense.date),
         description: expense.description,
         amount: expense.amount,
-        notDuplicate: expense.notDuplicate
+        askIfDuplicate:
+          expense.notDuplicate !== true && findDuplicates(expense, expenses)
       } as EditExpense;
     });
-
-    editExpenses
-      .filter(editExpense => editExpense.notDuplicate !== true)
-      .forEach(
-        editExpense =>
-          (editExpense.askIfDuplicate = findDuplicates(
-            editExpenses,
-            editExpense
-          ))
-      );
-
-    return editExpenses;
   };
 
-  const findDuplicates = (
-    editExpenses: EditExpense[],
-    editExpense: EditExpense
-  ): boolean =>
-    editExpenses.filter(
-      expense =>
-        expense.date.isSame(editExpense.date) &&
-        expense.description === editExpense.description &&
-        expense.amount === editExpense.amount
+  const findDuplicates = (expense: Expense, expenses: Expense[]): boolean =>
+    expenses.filter(
+      e =>
+        e.amount === expense.amount &&
+        e.description === expense.description &&
+        e.date.isSame(expense.date)
     ).length > 1;
-
-  const getEditExpenses = () => {
-    fetch("/expenses")
-      .then(result => result.json())
-      .then((expenses: Expense[]) => setExpenses(transformExpenses(expenses)));
-  };
-
-  const deleteExpense = (id: string) => {
-    fetch("/expenses?id=" + id, { method: "DELETE" }).then(() =>
-      getEditExpenses()
-    );
-  };
 
   const columns = [
     {
@@ -87,8 +71,8 @@ export const EditContainer = () => {
       title: "Dublett",
       dataIndex: "askIfDuplicate",
       key: "askIfDuplicate",
-      render: (value: boolean, editExpense: EditExpense) => {
-        return value === true ? (
+      render: (askIfDuplicate: boolean, editExpense: EditExpense) => {
+        return askIfDuplicate === true ? (
           <Button onClick={() => deleteExpense(editExpense.id)}>Ta bort</Button>
         ) : (
           undefined
@@ -100,7 +84,7 @@ export const EditContainer = () => {
   return (
     <Row>
       <Col span={24} className="container-margin">
-        <Table dataSource={expenses} columns={columns} />
+        <Table dataSource={editExpenses} columns={columns} />
       </Col>
     </Row>
   );
