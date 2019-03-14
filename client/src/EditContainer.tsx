@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Expense } from "./MainContainer";
-import { Table, Row, Col, Button } from "antd";
+import { Table, Row, Col, Button, Spin } from "antd";
 import moment from "moment";
 import { getExpenses } from "./api";
 
@@ -14,14 +14,17 @@ interface EditExpense {
 
 export const EditContainer = () => {
   const [editExpenses, setEditExpenses] = useState<Array<EditExpense>>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchExpenses();
   }, []);
 
   const fetchExpenses = async () => {
+    setIsLoading(true);
     const expenses = await getExpenses();
     setEditExpenses(transformExpenses(expenses));
+    setIsLoading(false);
   };
 
   const deleteExpense = async (id: string) => {
@@ -84,7 +87,11 @@ export const EditContainer = () => {
   return (
     <Row>
       <Col span={24} className="container-margin">
-        <Table dataSource={editExpenses} columns={columns} />
+        {isLoading ? (
+          <Spin size="large" />
+        ) : (
+          <Table dataSource={editExpenses} columns={columns} />
+        )}
       </Col>
     </Row>
   );

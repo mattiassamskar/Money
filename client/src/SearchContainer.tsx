@@ -9,10 +9,13 @@ interface Props {
 
 export const SearchContainer = (props: Props) => {
   const [filter, setFilter] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchExpenses = async () => {
+    setIsLoading(true);
     const expenses = await getExpenses(filter);
     props.setExpenses(expenses);
+    setIsLoading(false);
   };
 
   return (
@@ -25,8 +28,13 @@ export const SearchContainer = (props: Props) => {
         />
       </Col>
       <Col span={16}>
-        <Button type="primary" onClick={fetchExpenses}>
-          Sök!
+        <Button
+          icon="search"
+          type="primary"
+          loading={isLoading}
+          onClick={fetchExpenses}
+        >
+          Sök
         </Button>
       </Col>
     </Row>
