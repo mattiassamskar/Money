@@ -32,7 +32,11 @@ export const ChartContainer = (props: Props) => {
     exporting: { enabled: false },
     tooltip: {
       formatter: function() {
-        return this.x + " " + "<b>" + this.y + "</b>";
+        const amount = Intl.NumberFormat("sv-se", {
+          style: "currency",
+          currency: "SEK",
+        }).format(this.y);
+        return this.x + " " + "<b>" + amount + "</b>";
       }
     },
     xAxis: {
