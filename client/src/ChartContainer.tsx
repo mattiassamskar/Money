@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import { Row } from "antd";
 import { Expense } from "./MainContainer";
 import * as Highcharts from "highcharts";
@@ -30,7 +30,11 @@ export const ChartContainer = (props: Props) => {
     legend: { enabled: false },
     credits: { enabled: false },
     exporting: { enabled: false },
-    tooltip: { valueDecimals: 0 },
+    tooltip: {
+      formatter: function() {
+        return this.x + " " + "<b>" + this.y + "</b>";
+      }
+    },
     xAxis: {
       type: "category",
       categories
