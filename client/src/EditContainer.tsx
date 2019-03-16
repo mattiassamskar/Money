@@ -4,6 +4,7 @@ import moment from "moment";
 import { getExpenses } from "./api";
 import { transformToEditExpenses } from "./expensTransformers";
 import { EditExpense } from "./types";
+import { ColumnProps } from "antd/lib/table";
 
 export const EditContainer = () => {
   const [editExpenses, setEditExpenses] = useState<Array<EditExpense>>([]);
@@ -25,8 +26,7 @@ export const EditContainer = () => {
     fetchExpenses();
   };
 
-
-  const columns = [
+  const columns: ColumnProps<EditExpense>[] = [
     {
       title: "Datum",
       dataIndex: "date",
@@ -41,7 +41,14 @@ export const EditContainer = () => {
     {
       title: "Belopp",
       dataIndex: "amount",
-      key: "amount"
+      key: "amount",
+      render: (amount: number) => (
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          {Intl.NumberFormat("sv-se", { minimumFractionDigits: 2 }).format(
+            amount
+          )}
+        </div>
+      )
     },
     {
       title: "Dublett",

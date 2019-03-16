@@ -23,7 +23,14 @@ export const ExpensesContainer = (props: Props) => {
     {
       title: "Belopp",
       dataIndex: "amount",
-      key: "amount"
+      key: "amount",
+      render: (amount: number) => (
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          {Intl.NumberFormat("sv-se", { minimumFractionDigits: 2 }).format(
+            amount
+          )}
+        </div>
+      )
     }
   ];
 
