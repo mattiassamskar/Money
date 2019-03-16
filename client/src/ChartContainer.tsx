@@ -4,22 +4,15 @@ import { Expense } from "./MainContainer";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import moment from "moment";
+import { sumExpensesByMonth } from "./expensTransformers";
 
 interface Props {
   expenses: Expense[];
 }
 
 export const ChartContainer = (props: Props) => {
-  const sumExpensesByMonth = () => {
-    return props.expenses.reduce((a: { [key: number]: number }, b) => {
-      const month = parseInt(b.date.format("YYYYMM"));
-      a[month] = a[month] || 0;
-      a[month] = a[month] + b.amount;
-      return a;
-    }, []);
-  };
+  const expensesByMonth = sumExpensesByMonth(props.expenses);
 
-  const expensesByMonth = sumExpensesByMonth();
   const categories = [...Object.keys(expensesByMonth)].map(key =>
     moment.utc(key + "01").format("MMM YYYY")
   );
@@ -37,7 +30,7 @@ export const ChartContainer = (props: Props) => {
     legend: { enabled: false },
     credits: { enabled: false },
     exporting: { enabled: false },
-    tooltip: { valueDecimals: 2 },
+    tooltip: { valueDecimals: 0 },
     xAxis: {
       type: "category",
       categories

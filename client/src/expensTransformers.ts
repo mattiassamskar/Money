@@ -22,3 +22,12 @@ const findDuplicates = (expense: Expense, expenses: Expense[]): boolean =>
       e.description === expense.description &&
       e.date.isSame(expense.date)
   ).length > 1;
+
+export const sumExpensesByMonth = (expenses: Expense[]) => {
+  return expenses.reduce((a: { [key: number]: number }, b) => {
+    const month = parseInt(b.date.format("YYYYMM"));
+    a[month] = a[month] || 0;
+    a[month] = a[month] + b.amount;
+    return a;
+  }, []);
+};
