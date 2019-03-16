@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Expense } from "./MainContainer";
 import { Table, Row, Col, Button, Spin } from "antd";
 import moment from "moment";
 import { getExpenses } from "./api";
+import { transformToEditExpenses } from "./expensTransformers";
 
-interface EditExpense {
+export interface EditExpense {
   id: string;
   date: moment.Moment;
   description: string;
@@ -23,7 +23,7 @@ export const EditContainer = () => {
   const fetchExpenses = async () => {
     setIsLoading(true);
     const expenses = await getExpenses();
-    setEditExpenses(transformExpenses(expenses));
+    setEditExpenses(transformToEditExpenses(expenses));
     setIsLoading(false);
   };
 
@@ -32,26 +32,6 @@ export const EditContainer = () => {
     fetchExpenses();
   };
 
-  const transformExpenses = (expenses: Expense[]): EditExpense[] => {
-    return expenses.map(expense => {
-      return {
-        id: expense.id,
-        date: moment.utc(expense.date),
-        description: expense.description,
-        amount: expense.amount,
-        askIfDuplicate:
-          expense.notDuplicate !== true && findDuplicates(expense, expenses)
-      } as EditExpense;
-    });
-  };
-
-  const findDuplicates = (expense: Expense, expenses: Expense[]): boolean =>
-    expenses.filter(
-      e =>
-        e.amount === expense.amount &&
-        e.description === expense.description &&
-        e.date.isSame(expense.date)
-    ).length > 1;
 
   const columns = [
     {
