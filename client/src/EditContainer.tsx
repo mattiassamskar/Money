@@ -3,14 +3,7 @@ import { Table, Row, Col, Button, Spin } from "antd";
 import moment from "moment";
 import { getExpenses } from "./api";
 import { transformToEditExpenses } from "./expensTransformers";
-
-export interface EditExpense {
-  id: string;
-  date: moment.Moment;
-  description: string;
-  amount: number;
-  askIfDuplicate: boolean;
-}
+import { EditExpense } from "./types";
 
 export const EditContainer = () => {
   const [editExpenses, setEditExpenses] = useState<Array<EditExpense>>([]);
