@@ -9,6 +9,7 @@ import { ColumnProps } from "antd/lib/table";
 export const EditContainer = () => {
   const [editExpenses, setEditExpenses] = useState<Array<EditExpense>>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isUploadingFiles, setIsUploadingFiles] = useState(false);
 
   useEffect(() => {
     fetchExpenses();
@@ -24,6 +25,14 @@ export const EditContainer = () => {
   const deleteExpense = async (id: string) => {
     await api.deleteExpense(id);
     fetchExpenses();
+  };
+
+  const onDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsUploadingFiles(true);
+    await api.uploadFiles(e.dataTransfer.files);
+    setIsUploadingFiles(false);
+    await fetchExpenses();
   };
 
   const columns: ColumnProps<EditExpense>[] = [
@@ -68,12 +77,16 @@ export const EditContainer = () => {
   ];
 
   return (
-    <Row>
+    <Row
+      onDragOver={e => e.preventDefault()}
+      onDragEnd={e => e.dataTransfer.clearData()}
+      onDrop={onDrop}
+    >
       <Col span={24}>
-        {isLoading ? (
+        {isLoading || isUploadingFiles ? (
           <Spin size="large" />
         ) : (
-          <Table dataSource={editExpenses} columns={columns} rowKey="id"/>
+          <Table dataSource={editExpenses} columns={columns} rowKey="id" />
         )}
       </Col>
     </Row>
