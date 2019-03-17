@@ -13,7 +13,8 @@ export const ExpensesContainer = (props: Props) => {
       title: "Datum",
       dataIndex: "date",
       key: "date",
-      render: (date: moment.Moment) => <div>{date.format("YYYY-MM-DD")}</div>
+      render: (date: moment.Moment) => <div>{date.format("YYYY-MM-DD")}</div>,
+      sorter: (a: Expense, b: Expense) => a.date.diff(b.date)
     },
     {
       title: "Beskrivning",
@@ -30,14 +31,19 @@ export const ExpensesContainer = (props: Props) => {
             amount
           )}
         </div>
-      )
+      ),
+      sorter: (a: Expense, b: Expense) => a.amount - b.amount
     }
   ];
 
   return (
     <Row>
       <Col span={24}>
-        <Table dataSource={props.expenses} columns={columns} />
+        <Table
+          dataSource={props.expenses}
+          columns={columns}
+          rowKey="id"
+        />
       </Col>
     </Row>
   );

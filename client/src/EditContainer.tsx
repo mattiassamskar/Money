@@ -31,7 +31,8 @@ export const EditContainer = () => {
       title: "Datum",
       dataIndex: "date",
       key: "date",
-      render: (date: moment.Moment) => <div>{date.format("YYYY-MM-DD")}</div>
+      render: (date: moment.Moment) => <div>{date.format("YYYY-MM-DD")}</div>,
+      sorter: (a: EditExpense, b: EditExpense) => a.date.diff(b.date)
     },
     {
       title: "Beskrivning",
@@ -48,7 +49,8 @@ export const EditContainer = () => {
             amount
           )}
         </div>
-      )
+      ),
+      sorter: (a: EditExpense, b: EditExpense) => a.amount - b.amount
     },
     {
       title: "Dublett",
@@ -60,7 +62,8 @@ export const EditContainer = () => {
         ) : (
           undefined
         );
-      }
+      },
+      sorter: (a: EditExpense, b: EditExpense) => (a.askIfDuplicate ? 1 : -1)
     }
   ];
 
@@ -70,7 +73,7 @@ export const EditContainer = () => {
         {isLoading ? (
           <Spin size="large" />
         ) : (
-          <Table dataSource={editExpenses} columns={columns} />
+          <Table dataSource={editExpenses} columns={columns} rowKey="id"/>
         )}
       </Col>
     </Row>
