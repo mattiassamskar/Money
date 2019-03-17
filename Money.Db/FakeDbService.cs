@@ -12,12 +12,14 @@ namespace Money.Db
       {
         new Expense
         {
+          Id = "1",
           Amount = 100,
           Date = DateTime.Now,
           Description = "Expense 1"
         },
         new Expense
         {
+          Id = "2",
           Amount = 200,
           Date = DateTime.Now,
           Description = "Expense 2"
