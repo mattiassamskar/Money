@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, Row, Col, Button, Spin } from "antd";
 import moment from "moment";
-import { getExpenses } from "./api";
+import api from "./api";
 import { transformToEditExpenses } from "./expensTransformers";
 import { EditExpense } from "./types";
 import { ColumnProps } from "antd/lib/table";
@@ -16,13 +16,13 @@ export const EditContainer = () => {
 
   const fetchExpenses = async () => {
     setIsLoading(true);
-    const expenses = await getExpenses();
+    const expenses = await api.getExpenses();
     setEditExpenses(transformToEditExpenses(expenses));
     setIsLoading(false);
   };
 
   const deleteExpense = async (id: string) => {
-    await deleteExpense(id);
+    await api.deleteExpense(id);
     fetchExpenses();
   };
 

@@ -18,3 +18,8 @@ export const deleteExpense = async (id: string) => {
     await fetch("/expenses?id=" + id, { method: "DELETE" });
   } catch (error) {}
 };
+
+export default {
+  getExpenses,
+  deleteExpense
+}
