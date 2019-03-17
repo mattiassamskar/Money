@@ -19,15 +19,15 @@ export const SearchContainer = (props: Props) => {
   };
 
   return (
-    <Row type="flex" justify="center" className="container-margin">
-      <Col span={8}>
+    <Row type="flex" justify="center">
+      <Col xs={16} md={10}>
         <Input
           placeholder="Sökord.."
           value={filter}
           onChange={text => setFilter(text.target.value)}
         />
       </Col>
-      <Col span={16}>
+      <Col>
         <Button
           icon="search"
           type="primary"

@@ -36,7 +36,7 @@ export const ExpensesContainer = (props: Props) => {
 
   return (
     <Row>
-      <Col span={24} className="container-margin">
+      <Col span={24}>
         <Table dataSource={props.expenses} columns={columns} />
       </Col>
     </Row>

@@ -15,13 +15,13 @@ const App = () => {
     <BrowserRouter>
       <div className="App">
         <Row>
-          <Col xs={0} md={3} />
-          <Col xs={24} md={18}>
+          <Col xs={0} md={2} />
+          <Col xs={24} md={20}>
             <Header />
             <Route path="/" exact component={MainContainer} />
             <Route path="/edit" component={EditContainer} />
           </Col>
-          <Col xs={0} md={3} />
+          <Col xs={0} md={2} />
         </Row>
       </div>
     </BrowserRouter>

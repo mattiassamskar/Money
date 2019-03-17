@@ -66,7 +66,7 @@ export const EditContainer = () => {
 
   return (
     <Row>
-      <Col span={24} className="container-margin">
+      <Col span={24}>
         {isLoading ? (
           <Spin size="large" />
         ) : (
