@@ -34,13 +34,14 @@ namespace Money.Web
       services.AddSingleton<IStatementService, StatementService>();
       services.AddSingleton<IStatementParser, CirclekStatementParser>();
       services.AddSingleton<IStatementParser, SkandiaStatementParser>();
+      services.AddSingleton<IStatementParser, SeomStatementParser>();
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
       if (env.IsDevelopment())
       {
-        app.UseDeveloperExceptionPage();  
+        app.UseDeveloperExceptionPage();
       }
 
       app.UseDefaultFiles();
