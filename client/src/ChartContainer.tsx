@@ -43,7 +43,8 @@ export const ChartContainer = (props: Props) => {
     },
     xAxis: {
       type: "category",
-      categories
+      categories,
+      tickInterval: 3
     },
     yAxis: {
       title: undefined,
