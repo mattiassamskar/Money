@@ -35,6 +35,8 @@ export const ChartContainer = (props: Props) => {
         const amount = Intl.NumberFormat("sv-se", {
           style: "currency",
           currency: "SEK",
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
         }).format(this.y);
         return this.x + " " + "<b>" + amount + "</b>";
       }
