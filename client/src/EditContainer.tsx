@@ -83,11 +83,12 @@ export const EditContainer = () => {
       onDrop={onDrop}
     >
       <Col span={24}>
-        {isLoading || isUploadingFiles ? (
-          <Spin size="large" />
-        ) : (
-          <Table dataSource={editExpenses} columns={columns} rowKey="id" />
-        )}
+        <Table
+          dataSource={editExpenses}
+          columns={columns}
+          rowKey="id"
+          loading={isLoading || isUploadingFiles}
+        />
       </Col>
     </Row>
   );
