@@ -3,11 +3,7 @@ import { Expense } from "./MainContainer";
 import { Table, Row, Col } from "antd";
 import moment from "moment";
 
-interface Props {
-  expenses: Expense[];
-}
-
-export const ExpensesContainer = (props: Props) => {
+export const ExpensesContainer = ({ expenses }: { expenses: Expense[] }) => {
   const columns = [
     {
       title: "Datum",
@@ -39,11 +35,7 @@ export const ExpensesContainer = (props: Props) => {
   return (
     <Row>
       <Col span={24}>
-        <Table
-          dataSource={props.expenses}
-          columns={columns}
-          rowKey="id"
-        />
+        <Table dataSource={expenses} columns={columns} rowKey="id" />
       </Col>
     </Row>
   );

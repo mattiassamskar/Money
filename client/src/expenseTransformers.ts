@@ -1,6 +1,6 @@
-import { Expense } from "./MainContainer";
-import { EditExpense } from "./types";
 import moment from "moment";
+import { Expense } from "./MainContainer";
+import { EditExpense } from "./EditContainer";
 
 export const transformToEditExpenses = (expenses: Expense[]): EditExpense[] => {
   return expenses.map(expense => {

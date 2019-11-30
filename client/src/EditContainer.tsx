@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Table, Row, Col, Button, Spin } from "antd";
+import { Table, Row, Col, Button } from "antd";
 import moment from "moment";
-import api from "./api";
-import { transformToEditExpenses } from "./expensTransformers";
-import { EditExpense } from "./types";
+import { api } from "./api";
+import { transformToEditExpenses } from "./expenseTransformers";
 import { ColumnProps } from "antd/lib/table";
+
+export interface EditExpense {
+  id: string;
+  date: moment.Moment;
+  description: string;
+  amount: number;
+  askIfDuplicate: boolean;
+}
 
 export const EditContainer = () => {
   const [editExpenses, setEditExpenses] = useState<Array<EditExpense>>([]);
@@ -17,7 +24,7 @@ export const EditContainer = () => {
 
   const fetchExpenses = async () => {
     setIsLoading(true);
-    const expenses = await api.getExpenses();
+    const expenses = await api.fetchExpenses();
     setEditExpenses(transformToEditExpenses(expenses));
     setIsLoading(false);
   };

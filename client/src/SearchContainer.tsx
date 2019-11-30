@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { Input, Row, Col, Button } from "antd";
 import { Expense } from "./MainContainer";
-import { getExpenses } from "./api";
+import { api } from "./api";
 
-interface Props {
+export const SearchContainer = ({
+  setExpenses
+}: {
   setExpenses: (expenses: Expense[]) => void;
-}
-
-export const SearchContainer = (props: Props) => {
+}) => {
   const [filter, setFilter] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchExpenses = async () => {
+  const getExpenses = async () => {
     setIsLoading(true);
-    const expenses = await getExpenses(filter);
-    props.setExpenses(expenses);
+    const expenses = await api.fetchExpenses(filter);
+    setExpenses(expenses);
     setIsLoading(false);
   };
 
@@ -32,7 +32,7 @@ export const SearchContainer = (props: Props) => {
           icon="search"
           type="primary"
           loading={isLoading}
-          onClick={fetchExpenses}
+          onClick={getExpenses}
         >
           Sök
         </Button>

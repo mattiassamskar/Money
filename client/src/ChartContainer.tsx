@@ -4,14 +4,10 @@ import { Expense } from "./MainContainer";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import moment from "moment";
-import { sumExpensesByMonth } from "./expensTransformers";
+import { sumExpensesByMonth } from "./expenseTransformers";
 
-interface Props {
-  expenses: Expense[];
-}
-
-export const ChartContainer = (props: Props) => {
-  const expensesByMonth = sumExpensesByMonth(props.expenses);
+export const ChartContainer = ({ expenses }: { expenses: Expense[] }) => {
+  const expensesByMonth = sumExpensesByMonth(expenses);
 
   const categories = [...Object.keys(expensesByMonth)].map(key =>
     moment.utc(key + "01").format("MMM YYYY")
@@ -38,7 +34,7 @@ export const ChartContainer = (props: Props) => {
           minimumFractionDigits: 0,
           maximumFractionDigits: 0
         }).format(this.y);
-        return this.x + " " + "<b>" + amount + "</b>";
+        return this.x + " <b>" + amount + "</b>";
       }
     },
     xAxis: {

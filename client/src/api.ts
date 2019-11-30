@@ -1,7 +1,7 @@
 import moment from "moment";
 import { Expense } from "./MainContainer";
 
-export const getExpenses = async (filter?: string) => {
+const fetchExpenses = async (filter?: string) => {
   try {
     const url = filter ? "/expenses?filter=" + filter : "/expenses";
     const result = await fetch(url);
@@ -14,7 +14,7 @@ export const getExpenses = async (filter?: string) => {
   }
 };
 
-export const deleteExpense = async (id: string) => {
+const deleteExpense = async (id: string) => {
   try {
     await fetch("/expenses?id=" + id, { method: "DELETE" });
   } catch (error) {
@@ -22,7 +22,7 @@ export const deleteExpense = async (id: string) => {
   }
 };
 
-export const uploadFiles = async (files: FileList) => {
+const uploadFiles = async (files: FileList) => {
   try {
     var formData = new FormData();
     for (var i = 0; i < files.length; i++) {
@@ -37,8 +37,8 @@ export const uploadFiles = async (files: FileList) => {
   }
 };
 
-export default {
-  getExpenses,
+export const api = {
+  fetchExpenses,
   deleteExpense,
   uploadFiles
 };
