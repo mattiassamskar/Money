@@ -35,6 +35,7 @@ namespace Money.Web
       services.AddSingleton<IStatementParser, CirclekStatementParser>();
       services.AddSingleton<IStatementParser, SkandiaStatementParser>();
       services.AddSingleton<IStatementParser, SeomStatementParser>();
+      services.AddSingleton<IStatementParser, SkekraftStatementParser>();
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
