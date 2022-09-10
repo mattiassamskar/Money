@@ -5,22 +5,29 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": ".NET Core Launch (console)",
+      "name": ".NET Core Launch (web)",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/Money.Web/bin/Debug/netcoreapp2.1/Money.Web.dll",
+      "program": "${workspaceFolder}/Money.Web/bin/Debug/net6.0/Money.Web.dll",
       "args": [],
       "cwd": "${workspaceFolder}/Money.Web",
-      "console": "internalConsole",
       "stopAtEntry": false,
-      "internalConsoleOptions": "openOnSessionStart"
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      }
     },
     {
       "name": ".NET Core Attach",
       "type": "coreclr",
-      "request": "attach",
-      "processId": "${command:pickProcess}"
+      "request": "attach"
     }
   ]
 }
