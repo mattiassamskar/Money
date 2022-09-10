@@ -12,39 +12,60 @@ namespace Money.Db
 {
   public class MongoDbService : IDbService
   {
-    private readonly Lazy<IMongoCollection<Expense>> _collection;
+    private readonly Lazy<IMongoCollection<Expense>> _expenses;
+    private readonly Lazy<IMongoCollection<Filter>> _filters;
 
     public MongoDbService(IOptions<Options> options)
     {
-      _collection = new Lazy<IMongoCollection<Expense>>(() =>
+      _expenses = new Lazy<IMongoCollection<Expense>>(() =>
         new MongoClient(options.Value.MoneyDbConnectionString)
           .GetDatabase("money")
           .GetCollection<Expense>("expenses"));
+
+      _filters = new Lazy<IMongoCollection<Filter>>(() =>
+        new MongoClient(options.Value.MoneyDbConnectionString)
+          .GetDatabase("money")
+          .GetCollection<Filter>("filters"));
     }
 
     public ICollection<Expense> GetExpenses()
     {
-      return _collection.Value.Find(new BsonDocument()).ToList();
+      return _expenses.Value.Find(new BsonDocument()).ToList();
     }
 
     public ICollection<Expense> GetFilteredExpenses(IEnumerable<string> filters, string month)
     {
-      return _collection.Value.FindSync(GetFilterDefinition(filters.ToList(), month)).ToList();
+      return _expenses.Value.FindSync(GetFilterDefinition(filters.ToList(), month)).ToList();
     }
 
     public void AddExpenses(IEnumerable<Expense> expenses)
     {
-      _collection.Value.InsertMany(expenses);
+      _expenses.Value.InsertMany(expenses);
     }
 
     public void AddExpense(Expense expense)
     {
-      _collection.Value.InsertOne(expense);
+      _expenses.Value.InsertOne(expense);
     }
 
     public void DeleteExpense(string objectId)
     {
-      _collection.Value.DeleteOne(expense => expense.Id == objectId);
+      _expenses.Value.DeleteOne(expense => expense.Id == objectId);
+    }
+
+    public ICollection<Filter> GetFilters()
+    {
+      return _filters.Value.Find(new BsonDocument()).ToList();
+    }
+
+    public void AddFilter(Filter filter)
+    {
+      _filters.Value.InsertOne(filter);
+    }
+
+    public void DeleteFilter(string objectId)
+    {
+      _filters.Value.DeleteOne(filter => filter.Id == objectId);
     }
 
     private static FilterDefinition<Expense> GetFilterDefinition(List<string> filters, string month)
