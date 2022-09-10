@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Money.Core;
@@ -28,8 +22,9 @@ namespace Money.Web
     public void ConfigureServices(IServiceCollection services)
     {
       services.Configure<Options>(Configuration);
-      services.AddMvc();
+      services.AddMvc(x => x.EnableEndpointRouting = false);
       services.AddMediatR(typeof(Expense).Assembly);
+      services.AddMediatR(typeof(Filter).Assembly);
       services.AddSingleton<IDbService, MongoDbService>();
       services.AddSingleton<IStatementService, StatementService>();
       services.AddSingleton<IStatementParser, CirclekStatementParser>();
@@ -38,13 +33,8 @@ namespace Money.Web
       services.AddSingleton<IStatementParser, SkekraftStatementParser>();
     }
 
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-      if (env.IsDevelopment())
-      {
-        app.UseDeveloperExceptionPage();
-      }
-
       app.UseDefaultFiles();
       app.UseStaticFiles();
       app.UseMvc();
