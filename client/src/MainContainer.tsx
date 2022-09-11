@@ -12,6 +12,11 @@ export interface Expense {
   notDuplicate: boolean | null;
 }
 
+export interface Filter {
+  id: string;
+  text: string;
+}
+
 export const MainContainer = () => {
   const [expenses, setExpenses] = useState<Array<Expense>>([]);
 
