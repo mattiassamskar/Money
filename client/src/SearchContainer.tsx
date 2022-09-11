@@ -19,6 +19,7 @@ export const SearchContainer = ({
 
   const getExpenses = async (text: string) => {
     setIsLoadingExpenses(true);
+    setExpenses([]);
     const expenses = await api.fetchExpenses(text);
     setExpenses(expenses);
     setIsLoadingExpenses(false);
@@ -33,7 +34,7 @@ export const SearchContainer = ({
 
   return (
     <div>
-      <Row type="flex" justify="center" gutter={8}>
+      <Row type="flex" justify="center" gutter={8} style={{ marginTop: 36 }}>
         <Col>
           <Button
             icon="save"

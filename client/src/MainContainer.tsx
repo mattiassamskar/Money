@@ -38,8 +38,12 @@ export const MainContainer = () => {
     >
       <Spin spinning={isLoading}>
         <SearchContainer setExpenses={setExpenses} />
-        <ChartContainer expenses={expenses} />
-        <ExpensesContainer expenses={expenses} />
+        {expenses.length > 0 && (
+          <>
+            <ChartContainer expenses={expenses} />
+            <ExpensesContainer expenses={expenses} />
+          </>
+        )}
       </Spin>
     </Row>
   );
