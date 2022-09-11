@@ -26,7 +26,7 @@ namespace Money.Web
       if (!ParametersAreValid(filter, month))
         return BadRequest();
 
-      var filters = filter?.Split(',') ?? Enumerable.Empty<string>();
+      var filters = filter?.Split(',').Select(filter => filter.Trim()) ?? Enumerable.Empty<string>();
       var result = _mediator.Send(new GetExpensesRequest { Filters = filters, Month = month }).Result;
 
       return Ok(result);

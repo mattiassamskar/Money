@@ -10,5 +10,8 @@ namespace Money.Core
     void AddExpenses(IEnumerable<Expense> expenses);
     void AddExpense(Expense expense);
     void DeleteExpense(string objectId);
+    ICollection<Filter> GetFilters();
+    void AddFilter(Filter filter);
+    void DeleteFilter(string objectId);
   }
 }

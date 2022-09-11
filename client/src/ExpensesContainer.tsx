@@ -10,12 +10,12 @@ export const ExpensesContainer = ({ expenses }: { expenses: Expense[] }) => {
       dataIndex: "date",
       key: "date",
       render: (date: moment.Moment) => <div>{date.format("YYYY-MM-DD")}</div>,
-      sorter: (a: Expense, b: Expense) => a.date.diff(b.date)
+      sorter: (a: Expense, b: Expense) => a.date.diff(b.date),
     },
     {
       title: "Beskrivning",
       dataIndex: "description",
-      key: "description"
+      key: "description",
     },
     {
       title: "Belopp",
@@ -28,12 +28,12 @@ export const ExpensesContainer = ({ expenses }: { expenses: Expense[] }) => {
           )}
         </div>
       ),
-      sorter: (a: Expense, b: Expense) => a.amount - b.amount
-    }
+      sorter: (a: Expense, b: Expense) => a.amount - b.amount,
+    },
   ];
 
   return (
-    <Row>
+    <Row style={{ marginTop: 36 }}>
       <Col span={24}>
         <Table dataSource={expenses} columns={columns} rowKey="id" />
       </Col>

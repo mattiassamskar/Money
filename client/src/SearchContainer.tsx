@@ -1,42 +1,80 @@
-import React, { useState } from "react";
-import { Input, Row, Col, Button } from "antd";
-import { Expense } from "./MainContainer";
+import React, { useEffect, useState } from "react";
+import { Input, Row, Col, Button, Tag } from "antd";
+import { Expense, Filter } from "./MainContainer";
 import { api } from "./api";
 
 export const SearchContainer = ({
-  setExpenses
+  setExpenses,
 }: {
   setExpenses: (expenses: Expense[]) => void;
 }) => {
-  const [filter, setFilter] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [text, setText] = useState("");
+  const [isLoadingExpenses, setIsLoadingExpenses] = useState(false);
+  const [isLoadingFilters, setIsLoadingFilters] = useState(false);
+  const [filters, setFilters] = useState<Filter[]>([]);
 
-  const getExpenses = async () => {
-    setIsLoading(true);
-    const expenses = await api.fetchExpenses(filter);
+  useEffect(() => {
+    getFilters();
+  }, []);
+
+  const getExpenses = async (text: string) => {
+    setIsLoadingExpenses(true);
+    setExpenses([]);
+    const expenses = await api.fetchExpenses(text);
     setExpenses(expenses);
-    setIsLoading(false);
+    setIsLoadingExpenses(false);
+  };
+
+  const getFilters = async () => {
+    setIsLoadingFilters(true);
+    const filters = await api.fetchFilters();
+    setFilters(filters);
+    setIsLoadingFilters(false);
   };
 
   return (
-    <Row type="flex" justify="center">
-      <Col xs={16} md={10}>
-        <Input
-          placeholder="Sökord.."
-          value={filter}
-          onChange={text => setFilter(text.target.value)}
-        />
-      </Col>
-      <Col>
-        <Button
-          icon="search"
-          type="primary"
-          loading={isLoading}
-          onClick={getExpenses}
-        >
-          Sök
-        </Button>
-      </Col>
-    </Row>
+    <div>
+      <Row type="flex" justify="center" gutter={8} style={{ marginTop: 36 }}>
+        <Col>
+          <Button
+            icon="save"
+            loading={isLoadingFilters}
+            onClick={async () => {
+              await api.addFilter(text);
+              await getFilters();
+            }}
+          />
+        </Col>
+        <Col xs={16} md={10}>
+          <Input.Search
+            placeholder="Sökord.."
+            enterButton
+            value={text}
+            loading={isLoadingExpenses}
+            onChange={(text) => setText(text.target.value)}
+            onSearch={() => getExpenses(text)}
+          />
+        </Col>
+      </Row>
+      <Row type="flex" justify="center" gutter={4}>
+        {filters.map((filter) => (
+          <Tag
+            key={filter.id}
+            style={{ marginTop: 8 }}
+            closable
+            onClick={async () => {
+              setText(filter.text);
+              await getExpenses(filter.text);
+            }}
+            onClose={async () => {
+              await api.deleteFilter(filter.id);
+              await getFilters();
+            }}
+          >
+            {filter.text}
+          </Tag>
+        ))}
+      </Row>
+    </div>
   );
 };
