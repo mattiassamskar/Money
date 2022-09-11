@@ -45,21 +45,14 @@ export const SearchContainer = ({
           />
         </Col>
         <Col xs={16} md={10}>
-          <Input
+          <Input.Search
             placeholder="Sökord.."
+            enterButton
             value={text}
-            onChange={(text) => setText(text.target.value)}
-          />
-        </Col>
-        <Col>
-          <Button
-            icon="search"
-            type="primary"
             loading={isLoadingExpenses}
-            onClick={() => getExpenses(text)}
-          >
-            Sök
-          </Button>
+            onChange={(text) => setText(text.target.value)}
+            onSearch={() => getExpenses(text)}
+          />
         </Col>
       </Row>
       <Row type="flex" justify="center" gutter={4}>
