@@ -9,7 +9,8 @@ export const SearchContainer = ({
   setExpenses: (expenses: Expense[]) => void;
 }) => {
   const [text, setText] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingExpenses, setIsLoadingExpenses] = useState(false);
+  const [isLoadingFilters, setIsLoadingFilters] = useState(false);
   const [filters, setFilters] = useState<Filter[]>([]);
 
   useEffect(() => {
@@ -17,17 +18,17 @@ export const SearchContainer = ({
   }, []);
 
   const getExpenses = async (text: string) => {
-    setIsLoading(true);
+    setIsLoadingExpenses(true);
     const expenses = await api.fetchExpenses(text);
     setExpenses(expenses);
-    setIsLoading(false);
+    setIsLoadingExpenses(false);
   };
 
   const getFilters = async () => {
-    setIsLoading(true);
+    setIsLoadingFilters(true);
     const filters = await api.fetchFilters();
     setFilters(filters);
-    setIsLoading(false);
+    setIsLoadingFilters(false);
   };
 
   return (
@@ -36,6 +37,7 @@ export const SearchContainer = ({
         <Col>
           <Button
             icon="save"
+            loading={isLoadingFilters}
             onClick={async () => {
               await api.addFilter(text);
               await getFilters();
@@ -53,7 +55,7 @@ export const SearchContainer = ({
           <Button
             icon="search"
             type="primary"
-            loading={isLoading}
+            loading={isLoadingExpenses}
             onClick={() => getExpenses(text)}
           >
             Sök
