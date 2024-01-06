@@ -7,7 +7,7 @@ using Money.Core.Requests;
 namespace Money.Web
 {
   [ApiController]
-  [Route("[controller]")]
+  [Route("api/[controller]")]
   public class FiltersController : ControllerBase
   {
     private readonly IMediator _mediator;

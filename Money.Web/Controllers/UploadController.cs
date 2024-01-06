@@ -10,7 +10,7 @@ using Money.Core.Requests;
 namespace Money.Web
 {
   [ApiController]
-  [Route("[controller]")]
+  [Route("api/[controller]")]
   public class UploadController : ControllerBase
   {
     private readonly IMediator _mediator;

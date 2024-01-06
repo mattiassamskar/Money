@@ -1,4 +1,3 @@
-import React from "react";
 import { Expense } from "./MainContainer";
 import { Table, Row, Col } from "antd";
 import moment from "moment";
@@ -33,8 +32,8 @@ export const ExpensesContainer = ({ expenses }: { expenses: Expense[] }) => {
   ];
 
   return (
-    <Row style={{ marginTop: 36 }}>
-      <Col span={24}>
+    <Row justify="center">
+      <Col xs={24} md={20}>
         <Table dataSource={expenses} columns={columns} rowKey="id" />
       </Col>
     </Row>

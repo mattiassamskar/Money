@@ -3,49 +3,49 @@ import { Expense, Filter } from "./MainContainer";
 
 const fetchExpenses = async (filter?: string) => {
   try {
-    const url = filter ? "/expenses?filter=" + filter : "/expenses";
+    const url = filter ? "/api/expenses?filter=" + filter : "/api/expenses";
     const result = await fetch(url);
     const expenses = (await result.json()) as Expense[];
     expenses.forEach((expense) => (expense.date = moment.utc(expense.date)));
     return expenses;
   } catch (error) {
-    console.log("Error fetching expenses: ", error.message);
+    console.log("Error fetching expenses: ", error);
     return [];
   }
 };
 
 const deleteExpense = async (id: string) => {
   try {
-    await fetch("/expenses?id=" + id, { method: "DELETE" });
+    await fetch("/api/expenses?id=" + id, { method: "DELETE" });
   } catch (error) {
-    console.log("Error deleting expense: ", error.message);
+    console.log("Error deleting expense: ", error);
   }
 };
 
 const fetchFilters = async () => {
   try {
-    const result = await fetch("/filters");
+    const result = await fetch("/api/filters");
     const expenses = (await result.json()) as Filter[];
     return expenses;
   } catch (error) {
-    console.log("Error fetching filters: ", error.message);
+    console.log("Error fetching filters: ", error);
     return [];
   }
 };
 
 const addFilter = async (text: string) => {
   try {
-    await fetch("/filters?text=" + text, { method: "PUT" });
+    await fetch("/api/filters?text=" + text, { method: "PUT" });
   } catch (error) {
-    console.log("Error adding filter: ", error.message);
+    console.log("Error adding filter: ", error);
   }
 };
 
 const deleteFilter = async (id: string) => {
   try {
-    await fetch("/filters?id=" + id, { method: "DELETE" });
+    await fetch("/api/filters?id=" + id, { method: "DELETE" });
   } catch (error) {
-    console.log("Error deleting filter: ", error.message);
+    console.log("Error deleting filter: ", error);
   }
 };
 
@@ -55,12 +55,12 @@ const uploadFiles = async (files: FileList) => {
     for (var i = 0; i < files.length; i++) {
       formData.append("files", files[i]);
     }
-    await fetch("/upload", {
+    await fetch("/api/upload", {
       method: "POST",
       body: formData,
     });
   } catch (error) {
-    console.log("Error uploading files: ", error.message);
+    console.log("Error uploading files: ", error);
   }
 };
 

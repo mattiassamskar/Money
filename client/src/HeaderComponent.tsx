@@ -1,18 +1,21 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { Icon } from "antd";
-import "antd/dist/antd.css";
+import { HomeOutlined } from "@ant-design/icons";
 import "./header.css";
+import { Col, Row } from "antd";
 
 export const Header = () => (
-  <div className="header-container">
-    <Link to="/" className="header-homelink">
-      <div>
-        <Icon type="home" /> Ekonomi
+  <Row justify={"center"}>
+    <Col xs={24} md={20}>
+      <div className="header-container">
+        <Link to="/" className="header-homelink">
+          <div>
+            <HomeOutlined /> Ekonomi
+          </div>
+        </Link>
+        <Link to="/edit" className="header-editlink">
+          Ändra
+        </Link>
       </div>
-    </Link>
-    <Link to="/edit" className="header-editlink">
-      Ändra
-    </Link>
-  </div>
+    </Col>
+  </Row>
 );

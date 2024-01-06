@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Input, Row, Col, Button, Tag } from "antd";
+import { useEffect, useState } from "react";
+import { Input, Col, Button, Tag, Row } from "antd";
 import { Expense, Filter } from "./MainContainer";
 import { api } from "./api";
+import { SaveOutlined } from "@ant-design/icons";
 
 export const SearchContainer = ({
   setExpenses,
@@ -33,11 +34,11 @@ export const SearchContainer = ({
   };
 
   return (
-    <div>
-      <Row type="flex" justify="center" gutter={8} style={{ marginTop: 36 }}>
+    <>
+      <Row justify="center">
         <Col>
           <Button
-            icon="save"
+            icon={<SaveOutlined />}
             loading={isLoadingFilters}
             onClick={async () => {
               await api.addFilter(text);
@@ -47,7 +48,6 @@ export const SearchContainer = ({
         </Col>
         <Col xs={16} md={10}>
           <Input.Search
-            placeholder="Sökord.."
             enterButton
             value={text}
             loading={isLoadingExpenses}
@@ -56,25 +56,27 @@ export const SearchContainer = ({
           />
         </Col>
       </Row>
-      <Row type="flex" justify="center" gutter={4}>
-        {filters.map((filter) => (
-          <Tag
-            key={filter.id}
-            style={{ marginTop: 8 }}
-            closable
-            onClick={async () => {
-              setText(filter.text);
-              await getExpenses(filter.text);
-            }}
-            onClose={async () => {
-              await api.deleteFilter(filter.id);
-              await getFilters();
-            }}
-          >
-            {filter.text}
-          </Tag>
-        ))}
+      <Row justify="center">
+        <Col xs={24} md={20} flex={"none"}>
+          {filters.map((filter) => (
+            <Tag
+              key={filter.id}
+              style={{ marginTop: 8 }}
+              closable
+              onClick={async () => {
+                setText(filter.text);
+                await getExpenses(filter.text);
+              }}
+              onClose={async () => {
+                await api.deleteFilter(filter.id);
+                await getFilters();
+              }}
+            >
+              {filter.text}
+            </Tag>
+          ))}
+        </Col>
       </Row>
-    </div>
+    </>
   );
 };

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Table, Row, Col, Button } from "antd";
+import { useState, useEffect } from "react";
+import { Table, Row, Col, Button, Flex } from "antd";
 import moment from "moment";
 import { api } from "./api";
 import { transformToEditExpenses } from "./expenseTransformers";
 import { ColumnProps } from "antd/lib/table";
+import { Header } from "./HeaderComponent";
 
 export interface EditExpense {
   id: string;
@@ -68,20 +69,23 @@ export const EditContainer = () => {
           <Button onClick={() => deleteExpense(editExpense.id)}>Ta bort</Button>
         ) : undefined;
       },
-      sorter: (a: EditExpense, b: EditExpense) => (a.askIfDuplicate ? 1 : -1),
+      sorter: (a: EditExpense) => (a.askIfDuplicate ? 1 : -1),
     },
   ];
 
   return (
-    <Row>
-      <Col span={24}>
-        <Table
-          dataSource={editExpenses}
-          columns={columns}
-          rowKey="id"
-          loading={isLoading}
-        />
-      </Col>
-    </Row>
+    <Flex gap="middle" vertical>
+      <Header />
+      <Row justify={"center"}>
+        <Col xs={24} md={20}>
+          <Table
+            dataSource={editExpenses}
+            columns={columns}
+            rowKey="id"
+            loading={isLoading}
+          />
+        </Col>
+      </Row>
+    </Flex>
   );
 };

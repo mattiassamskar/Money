@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import moment from "moment";
 import { ExpensesContainer } from "./ExpensesContainer";
 import { SearchContainer } from "./SearchContainer";
 import { ChartContainer } from "./ChartContainer";
-import { api } from "./api";
-import { Row, Spin } from "antd";
+import { Flex, Spin } from "antd";
+import { Header } from "./HeaderComponent";
+import { UploadContainer } from "./UploadContainer";
 
 export interface Expense {
   id: string;
@@ -23,28 +24,21 @@ export const MainContainer = () => {
   const [expenses, setExpenses] = useState<Array<Expense>>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const onDrop = async (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
-    await api.uploadFiles(e.dataTransfer.files);
-    setIsLoading(false);
-  };
-
   return (
-    <Row
-      onDragOver={(e) => e.preventDefault()}
-      onDragEnd={(e) => e.dataTransfer.clearData()}
-      onDrop={onDrop}
-    >
+    <Flex gap="middle" vertical>
+      <Header />
       <Spin spinning={isLoading}>
-        <SearchContainer setExpenses={setExpenses} />
-        {expenses.length > 0 && (
-          <>
-            <ChartContainer expenses={expenses} />
-            <ExpensesContainer expenses={expenses} />
-          </>
-        )}
+        <Flex gap="middle" vertical>
+          <SearchContainer setExpenses={setExpenses} />
+          {expenses.length > 0 && (
+            <>
+              <ChartContainer expenses={expenses} />
+              <ExpensesContainer expenses={expenses} />
+            </>
+          )}
+          <UploadContainer setIsLoading={setIsLoading} />
+        </Flex>
       </Spin>
-    </Row>
+    </Flex>
   );
 };
