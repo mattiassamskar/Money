@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="itext7" Version="7.0.3-netstandard" />
     <PackageReference Include="MediatR" Version="5.1.0" />
-    <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.23.1" />
   </ItemGroup>
 
 </Project>
