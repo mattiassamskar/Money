@@ -15,12 +15,13 @@
     "antd": "^5.12.8",
     "highcharts": "^7.2.1",
     "highcharts-react-official": "^2.2.2",
-    "moment": "^2.24.0",
+    "luxon": "^3.4.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
+    "@types/luxon": "^3.4.2",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@types/react-router-dom": "^5.3.3",

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Table, Row, Col, Button, Flex } from "antd";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { api } from "./api";
 import { transformToEditExpenses } from "./expenseTransformers";
 import { ColumnProps } from "antd/lib/table";
@@ -8,7 +8,7 @@ import { Header } from "./HeaderComponent";
 
 export interface EditExpense {
   id: string;
-  date: moment.Moment;
+  date: DateTime;
   description: string;
   amount: number;
   askIfDuplicate: boolean;
@@ -39,8 +39,9 @@ export const EditContainer = () => {
       title: "Datum",
       dataIndex: "date",
       key: "date",
-      render: (date: moment.Moment) => <div>{date.format("YYYY-MM-DD")}</div>,
-      sorter: (a: EditExpense, b: EditExpense) => a.date.diff(b.date),
+      render: (date: DateTime) => <div>{date.toFormat("yyyy-MM-dd")}</div>,
+      sorter: (a: EditExpense, b: EditExpense) =>
+        a.date.toMillis() - b.date.toMillis(),
     },
     {
       title: "Beskrivning",

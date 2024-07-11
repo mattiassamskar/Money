@@ -2,14 +2,14 @@ import { Col, Row } from "antd";
 import { Expense } from "./MainContainer";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import moment from "moment";
 import { sumExpensesByMonth } from "./expenseTransformers";
+import { DateTime } from "luxon";
 
 export const ChartContainer = ({ expenses }: { expenses: Expense[] }) => {
   const expensesByMonth = sumExpensesByMonth(expenses);
 
   const categories = [...Object.keys(expensesByMonth)].map((key) =>
-    moment.utc(key + "01").format("MMM YYYY")
+    DateTime.fromFormat(key + "01", "yyyyMMdd").toFormat("MMM yyyy")
   );
   const data = [...Object.values(expensesByMonth)].map((value) => {
     return { y: value };

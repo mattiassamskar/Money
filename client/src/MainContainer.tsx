@@ -1,5 +1,5 @@
 import { useState } from "react";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { ExpensesContainer } from "./ExpensesContainer";
 import { SearchContainer } from "./SearchContainer";
 import { ChartContainer } from "./ChartContainer";
@@ -9,10 +9,10 @@ import { UploadContainer } from "./UploadContainer";
 
 export interface Expense {
   id: string;
-  date: moment.Moment;
+  date: DateTime;
   description: string;
   amount: number;
-  notDuplicate: boolean | null;
+  notDuplicate: boolean;
 }
 
 export interface Filter {

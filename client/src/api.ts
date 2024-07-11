@@ -1,12 +1,27 @@
-import moment from "moment";
+import { DateTime } from "luxon";
 import { Expense, Filter } from "./MainContainer";
+
+interface ExpensesResponseData {
+  id: string;
+  date: string;
+  description: string;
+  amount: number;
+}
 
 const fetchExpenses = async (filter?: string) => {
   try {
     const url = filter ? "/api/expenses?filter=" + filter : "/api/expenses";
-    const result = await fetch(url);
-    const expenses = (await result.json()) as Expense[];
-    expenses.forEach((expense) => (expense.date = moment.utc(expense.date)));
+    const response = await fetch(url);
+    const result = (await response.json()) as ExpensesResponseData[];
+
+    const expenses: Expense[] = result.map((item) => ({
+      id: item.id,
+      amount: item.amount,
+      description: item.description,
+      date: DateTime.fromISO(item.date),
+      notDuplicate: true,
+    }));
+
     return expenses;
   } catch (error) {
     console.log("Error fetching expenses: ", error);

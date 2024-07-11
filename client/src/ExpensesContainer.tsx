@@ -1,6 +1,6 @@
 import { Expense } from "./MainContainer";
 import { Table, Row, Col } from "antd";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export const ExpensesContainer = ({ expenses }: { expenses: Expense[] }) => {
   const columns = [
@@ -8,8 +8,8 @@ export const ExpensesContainer = ({ expenses }: { expenses: Expense[] }) => {
       title: "Datum",
       dataIndex: "date",
       key: "date",
-      render: (date: moment.Moment) => <div>{date.format("YYYY-MM-DD")}</div>,
-      sorter: (a: Expense, b: Expense) => a.date.diff(b.date),
+      render: (date: DateTime) => <div>{date.toFormat("yyyy-MM-dd")}</div>,
+      sorter: (a: Expense, b: Expense) => a.date.diff(b.date).milliseconds,
     },
     {
       title: "Beskrivning",
