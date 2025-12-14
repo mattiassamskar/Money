@@ -34,7 +34,7 @@ namespace Money.Core.Services
       var invoiceDateLine = lines.First(line => line.StartsWith("Fakturadatum"));
 
       DateTime dateTime;
-      DateTime.TryParseExact(invoiceDateLine.Substring(13), "d MMM yyyy", new CultureInfo("sv-SE"), DateTimeStyles.None, out dateTime);
+      DateTime.TryParseExact(invoiceDateLine.Substring(13).Trim(), "d MMM yyyy", CustomCultureInfo, DateTimeStyles.None, out dateTime);
 
       return dateTime;
     }
@@ -58,6 +58,17 @@ namespace Money.Core.Services
         return false;
       expense = new Expense { Description = line.Split(' ').First(), Amount = amount };
       return true;
+    }
+
+    private static CultureInfo CustomCultureInfo
+    {
+      get
+      {
+        var cultureInfo = CultureInfo.GetCultures(CultureTypes.AllCultures).FirstOrDefault(c => c.LCID == 29).Clone() as CultureInfo;
+        cultureInfo.DateTimeFormat.AbbreviatedMonthNames = cultureInfo.DateTimeFormat.AbbreviatedMonthNames.Select(x => x.TrimEnd('.')).ToArray();
+        cultureInfo.DateTimeFormat.AbbreviatedMonthGenitiveNames = cultureInfo.DateTimeFormat.AbbreviatedMonthGenitiveNames.Select(x => x.TrimEnd('.')).ToArray();
+        return cultureInfo;
+      }
     }
   }
 }
