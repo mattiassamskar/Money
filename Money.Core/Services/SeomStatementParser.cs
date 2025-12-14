@@ -65,7 +65,7 @@ namespace Money.Core.Services
       get
       {
         var cultureInfo = CultureInfo.GetCultures(CultureTypes.AllCultures).FirstOrDefault(c => c.LCID == 29).Clone() as CultureInfo;
-        cultureInfo.DateTimeFormat.AbbreviatedMonthNames = cultureInfo.DateTimeFormat.AbbreviatedMonthNames.Select(x => x.TrimEnd('.')).ToArray();
+        cultureInfo.DateTimeFormat.AbbreviatedMonthNames = new List<string> { "jan", "feb", "mar", "apr", "maj", "jun", "jul", "aug", "sep", "okt", "nov", "dec", "" }.ToArray();
         cultureInfo.DateTimeFormat.AbbreviatedMonthGenitiveNames = cultureInfo.DateTimeFormat.AbbreviatedMonthGenitiveNames.Select(x => x.TrimEnd('.')).ToArray();
         return cultureInfo;
       }
