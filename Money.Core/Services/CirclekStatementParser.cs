@@ -10,7 +10,8 @@ namespace Money.Core.Services
   {
     public bool CanParse(Statement statement)
     {
-      return statement.Lines.Any(line => line.Contains("Circle K Mastercard") || line.Contains("Circle K MasterCard"));
+      var result = statement.Lines.Any(line => line.Contains("Circle K Mastercard") || line.Contains("Circle K MasterCard"));
+      return result;
     }
 
     public IEnumerable<Expense> Parse(Statement statement)
@@ -45,6 +46,9 @@ namespace Money.Core.Services
       {
         description += " " + parts[i];
       }
+
+      if (description.Contains("SALDO FRÅN FÖREGÅENDE") || description.Contains("TOTALT SALDO DETTA"))
+        return false;
 
       expense = new Expense { Date = dateTime, Description = description, Amount = amount };
       return true;
