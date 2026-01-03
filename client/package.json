@@ -13,7 +13,7 @@
     "test:ui": "vitest --ui"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.2.6",
+    "@ant-design/icons": "^6.1.0",
     "antd": "^5.12.8",
     "highcharts": "^7.2.1",
     "highcharts-react-official": "^2.2.2",
