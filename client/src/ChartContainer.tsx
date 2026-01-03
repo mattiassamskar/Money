@@ -2,18 +2,26 @@ import { Col, Row } from "antd";
 import { Expense } from "./MainContainer";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { sumExpensesByMonth } from "./expenseTransformers";
-import { DateTime } from "luxon";
+import {
+  getMaxDate,
+  getMinDate,
+  sumExpensesByMonth,
+} from "./expenseTransformers";
 
 export const ChartContainer = ({ expenses }: { expenses: Expense[] }) => {
-  const expensesByMonth = sumExpensesByMonth(expenses);
-
-  const categories = [...Object.keys(expensesByMonth)].map((key) =>
-    DateTime.fromFormat(key + "01", "yyyyMMdd").toFormat("MMM yyyy")
+  const expensesByMonth = sumExpensesByMonth(
+    expenses,
+    getMinDate(expenses),
+    getMaxDate(expenses)
   );
-  const data = [...Object.values(expensesByMonth)].map((value) => {
-    return { y: value };
-  });
+
+  const categories = expensesByMonth.map((expenseByMonth) =>
+    expenseByMonth.x.toFormat("MMM yyyy")
+  );
+
+  const data = expensesByMonth.map((expenseByMonth) => ({
+    y: expenseByMonth.y,
+  }));
 
   const options: Highcharts.Options = {
     chart: {
