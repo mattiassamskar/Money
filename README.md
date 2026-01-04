@@ -1,6 +1,6 @@
 # Money
 
-[![Build and deploy](https://github.com/mattiassamskar/Money/actions/workflows/master_money-app.yml/badge.svg)](https://github.com/mattiassamskar/Money/actions/workflows/master_money-app.yml)
+[![Build and deploy](https://github.com/mattiassamskar/Money/actions/workflows/build-and-deploy.yml/badge.svg)](https://github.com/mattiassamskar/Money/actions/workflows/build-and-deploy.yml)
 
 ## Develop
 
