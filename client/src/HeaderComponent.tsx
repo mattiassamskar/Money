@@ -9,7 +9,7 @@ export const Header = () => (
       <div className="header-container">
         <Link to="/" className="header-homelink">
           <div>
-            <HomeOutlined /> Ekonomi
+            <HomeOutlined /> Money
           </div>
         </Link>
         <Link to="/edit" className="header-editlink">
